@@ -3,6 +3,7 @@ import java.util.Scanner;
 public class Menu {
     Scanner scanner = new Scanner(System.in);
 
+
     public void mainMenu() {
         System.out.println("Welcome! \n(A)Login \n(B)Create Account");
         String menuSelect = scanner.next().toLowerCase();
@@ -26,8 +27,11 @@ public class Menu {
     }
 
     public void createAccountMenu() {
-        System.out.print("Enter Full Name: ");
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter First Name: ");
         String fullName = scanner.next();
+        System.out.print("Enter Last Name: ");
+        fullName += " " + scanner.next();
         System.out.println("Who are you? \n(A)Customer \n(B)Store Owner \n(C)Mall Owner");
         String menuSelect = scanner.next().toLowerCase();
         String accType = "";
@@ -50,6 +54,10 @@ public class Menu {
         }
         System.out.print("Enter a password: ");
         String password = scanner.next();
+
+        CreateAccount createAccount = new CreateAccount();
+        createAccount.addAccount(accType,fullName,password);
+        System.out.println("***Account has been created***");
     }
 
     public void customerMenu() {
@@ -73,6 +81,7 @@ public class Menu {
         }
     }
 
+/*
     public void mallOwnerMenu() {
         System.out.println("Hello. Choose action: \n(A)Approve Store Request  \n(B)Send Warning " +
                 "\n(C)Close a Store \n(D)Store List \n(Q)Logout");
@@ -131,6 +140,7 @@ public class Menu {
 
         }
     }
+*/
 
     public void storeList() {
 

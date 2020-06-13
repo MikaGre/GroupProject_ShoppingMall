@@ -1,11 +1,14 @@
 import java.util.Scanner;
 
 public class MainApp {
-    Scanner scanner = new Scanner(System.in);
-
+    private static final Menu menu = new Menu();
+    //Scanner scanner = new Scanner(System.in);
     public static void main (String[] args) {
 
+        do {
+            menu.mainMenu();
 
+        }while (true);
 
     }
 }

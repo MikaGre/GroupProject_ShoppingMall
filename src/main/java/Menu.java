@@ -2,7 +2,7 @@ import java.util.Scanner;
 
 public class Menu {
     Scanner scanner = new Scanner(System.in);
-
+    CreateAccount createAccount = new CreateAccount();
 
     public void mainMenu() {
         System.out.println("Welcome! \n(A)Login \n(B)Create Account");
@@ -21,9 +21,11 @@ public class Menu {
 
     public void loginMenu() {
         System.out.print("UserID: ");
-        int userID = scanner.nextInt();
+        String name = scanner.next();
         System.out.print("Password: ");
         String password = scanner.next();
+        createAccount.verfiyAccount(name,password);
+
     }
 
     public void createAccountMenu() {
@@ -31,7 +33,7 @@ public class Menu {
         System.out.print("Enter First Name: ");
         String fullName = scanner.next();
         System.out.print("Enter Last Name: ");
-        fullName += " " + scanner.next();
+        fullName += scanner.next();
         System.out.println("Who are you? \n(A)Customer \n(B)Store Owner \n(C)Mall Owner");
         String menuSelect = scanner.next().toLowerCase();
         String accType = "";
@@ -154,4 +156,3 @@ public class Menu {
 
 
 }
-

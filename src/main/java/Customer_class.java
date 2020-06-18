@@ -23,12 +23,12 @@ public static void accountDetails(){
 
 }
 public static void leaveStore(){
-    mainManu();
+   // mainManu();
 
 
 }
 public static void enterStore(){
-    getListStore();
+   // getListStore();
 
 }
 }

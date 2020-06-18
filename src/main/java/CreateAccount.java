@@ -37,7 +37,7 @@ public class CreateAccount {
         XSSFCell accountType = row.createCell(0);
         accountType.setCellValue("AccountType");
         XSSFCell fullName = row.createCell(1);
-        fullName.setCellValue("FullName/UserID");
+        fullName.setCellValue("UserID");
         XSSFCell password = row.createCell(2);
         password.setCellValue("Password");
         save();
@@ -81,7 +81,7 @@ public class CreateAccount {
             } else {
                 System.out.println("Incorrect login");
                 Menu menu = new Menu();
-                menu.loginMenu();
+                menu.mainMenu();
             }
         } catch (Exception e) {
             e.printStackTrace();

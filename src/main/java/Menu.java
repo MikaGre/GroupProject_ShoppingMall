@@ -5,6 +5,7 @@ import java.util.Scanner;
 public class Menu {
     Scanner scanner = new Scanner(System.in);
     CreateAccount createAccount = new CreateAccount();
+    Inventory inventory = new Inventory();
 
 
     public void mainMenu() {
@@ -144,13 +145,16 @@ public class Menu {
                 String input = scanner.next().toLowerCase();
                   switch (input){
                       case "a":
-                          Inventory inventory = new Inventory();
-                          inventory.getStoreItems();
+
+                          inventory.searchItem();
+                          break;
                       case "b":
-                          String itemName = scanner.next();
-                          double price = scanner.nextDouble();
-                          int qty = scanner.nextInt();
-                         // inventory.addStoreItem(itemName,price,qty);
+
+                          inventory.addStoreItem();
+                          break;
+                      default:
+                          System.out.println( menuSelect + " is not an action!");
+                          storeOwnerMenu();
                   }
                 break;
             case "c":

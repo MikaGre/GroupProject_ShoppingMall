@@ -11,11 +11,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class CreateAccount {
+public class CreateAccount extends Inventory{
     //Scanner scanner = new Scanner(System.in);
-
+    Inventory accID;
     private  XSSFSheet sheet;
     private final String filename = "Account Information.xlsx";
+
 
     public CreateAccount () {
         try {
@@ -54,6 +55,8 @@ public class CreateAccount {
         XSSFCell passwordCell = newRow.createCell(2);
         passwordCell.setCellValue(password);
         save();
+
+        accID = new Inventory();
     }
 
     public boolean verfiyAccount (String name, String password) {

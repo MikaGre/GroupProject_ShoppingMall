@@ -1,14 +1,14 @@
-package GroupProject_ShoppingMallMy;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
 
-public class MallOwnerPractice {
+import java.util.*;
+
+public class MallOwner {
     static Scanner scanner = new Scanner(System.in);
     static int input;
+    //static List<Integer> storeOwnerList = new ArrayList<>();
+    public  static Map<String, Integer[]> allStore = new HashMap<>();
 
-    public MallOwnerPractice() {
+    public MallOwner() {
         do {
             System.out.println("Please choose an option:" +
                     "\n" + "|(1)to see new store request| |(2)to approve a new store request| " +
@@ -46,18 +46,29 @@ public class MallOwnerPractice {
         } while (true);
 
     }
-    public static  void getStoreRequest(){
-        Store_Owner.requestNewStore();
+    public void getStoreRequest(){
+    StoreOwner s1 = new StoreOwner();
+    String name;
+    String ownerName;
+        System.out.println("select 'store name'");
+    name = scanner.next();
+        System.out.println("select 'Store owner name'");
+    ownerName=scanner.next();
+    s1.requestNewStore(name, ownerName);
+
     }
     public static void setStore() {
+       // allStore.put("bob", new Integer[]{22, 23});
+        StoreOwner s1 = new StoreOwner();
         String approveStore;
         System.out.println("to approve please choose option 'yes' || to reject choose option 'no'");
         approveStore = scanner.next();
         if (approveStore.equalsIgnoreCase("yes")) {
-            Store_Owner.storeId++;
-            System.out.println("Approved new store for "+ Store_Owner.StoreOwnerName + " with the Id : " + Store_Owner.storeId);
+            s1.storeID++;
+            allStore.put(s1.storeOwnerName, new Integer[] {s1.storeID});
+            System.out.println("Approved new store for "+ s1.storeOwnerName + " with the Id : " + s1.storeID);
         } else if (approveStore.equalsIgnoreCase("no")) {
-            System.out.println("Request for new store by " + Store_Owner.StoreOwnerName + " is rejected");
+            System.out.println("Request for new store by " + s1.storeOwnerName + " is rejected");
         }
     }
     public static void sendWarning(){
@@ -73,18 +84,26 @@ public class MallOwnerPractice {
 
     }
     public static void forceStoreClose(){
-
+        String toClose;
+        System.out.println("select the 'Store owner's name to close store");
+        toClose= scanner.next();
+        StoreOwner s1 = new StoreOwner();
+     //   s1.closeStore();
     }
     public static void getStoreList(){
-        Map<String, Integer> allStore = new HashMap<>();
-        allStore.put(Store_Owner.StoreOwnerName, Store_Owner.storeId);
+        StoreOwner s1 = new StoreOwner();
+
+
         System.out.println(allStore);
     }
     public static void getInventory(){
+        Inventory i1 = new Inventory();
 
+        System.out.println(i1.storeInventory);
     }
     public static void toLogout(){
+        Menu m1 = new Menu();
         System.out.println("going back to login part");
-     //   mainManu();
+     m1.mainMenu();
     }
 }

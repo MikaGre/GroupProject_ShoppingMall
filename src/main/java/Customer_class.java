@@ -1,3 +1,5 @@
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 public class Customer_class {
@@ -5,7 +7,10 @@ String customerName;
 String address;
 String email;
 String creditCardInfo;
-Menu menu = new Menu();
+
+static int accID = 0;
+static Map<Integer,String[]> custAccountInfo = new HashMap<>();
+
 
 
 public static void accountDetails(){
@@ -17,12 +22,13 @@ public static void accountDetails(){
     System.out.println("please enter your email");
     String email = input.next();
     System.out.println("please enter your credit card information");
-    String creditCardInfo = input.next();
-    System.out.println("you are successfully enter to the store");
 
+    int id = accID++;
+custAccountInfo.put(id,new String[]{name,address,email});
 
 }
 public static void leaveStore(){
+
 
    // mainManu();
 
@@ -36,6 +42,11 @@ public static void enterStore(){
    // getListStore();
 
    // menu.getListStore();
+
+
+    Menu menu=new Menu();
+    menu.mainMenu();
+
 
 
 }

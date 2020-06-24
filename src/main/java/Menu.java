@@ -79,7 +79,7 @@ public class Menu {
     }
 
     public void customerMenu() {
-        System.out.println("Hello. Choose action: \n(A)Visit Store \n(B)View Shopping Cart \n(Q)Logout");
+        System.out.println("Hello. Choose action: \n(A)Visit Store \n(B)View Shopping Cart  \n(D)Edit account details \n(P)Payment  \n(Q)Logout");
         String menuSelect = scanner.next().toLowerCase();
 
         switch (menuSelect){
@@ -90,6 +90,12 @@ public class Menu {
                 cartDetails();
             case "q":
                 mainMenu();
+                break;
+            case "p":
+                Order_class.payment();
+                break;
+            case "d":
+                Customer_class.accountDetails();
                 break;
             default:
                 System.out.println( menuSelect + " is not an action!");
@@ -107,7 +113,11 @@ public class Menu {
 
         switch (menuSelect){
             case "a":
+<<<<<<< Updated upstream
                // MallOwnerPractice.getStoreRequest();
+=======
+                /**MallOwnerPractice.getStoreRequest();
+>>>>>>> Stashed changes
                 break;
             case "b":
               //  MallOwnerPractice.sendWarning();
@@ -116,7 +126,11 @@ public class Menu {
              //   MallOwnerPractice.forceStoreClose();
                 break;
             case "d":
+<<<<<<< Updated upstream
              //   MallOwnerPractice.getStoreList();
+=======
+                MallOwnerPractice.getStoreList();*/
+>>>>>>> Stashed changes
                 break;
             case "q":
                 mainMenu();
@@ -131,6 +145,7 @@ public class Menu {
     }
 
     public void storeOwnerMenu() {
+        Inventory inventory=new Inventory();
         System.out.println("Hello. Choose action: \n(A)Request New Store  \n(B)Inventory " +
                 "\n(C)Close Store \n(Q)Logout");
 
@@ -146,8 +161,12 @@ public class Menu {
                   switch (input){
                       case "a":
 
+<<<<<<< Updated upstream
                           inventory.searchItem();
                           break;
+=======
+                          inventory.getStoreItems();
+>>>>>>> Stashed changes
                       case "b":
 
                           inventory.addStoreItem();
@@ -172,7 +191,11 @@ public class Menu {
 
     public void storeList() {
         StoreOwner storeOwner = new StoreOwner();
+<<<<<<< Updated upstream
        // System.out.println(storeOwner.store.values());
+=======
+
+>>>>>>> Stashed changes
 
     }
 

@@ -5,7 +5,7 @@ String customerName;
 String address;
 String email;
 String creditCardInfo;
-
+Menu menu = new Menu();
 
 
 public static void accountDetails(){
@@ -23,12 +23,20 @@ public static void accountDetails(){
 
 }
 public static void leaveStore(){
-    mainManu();
+
+   // mainManu();
+
+   // menu.mainManu();
+
 
 
 }
 public static void enterStore(){
-    getListStore();
+
+   // getListStore();
+
+   // menu.getListStore();
+
 
 }
 }

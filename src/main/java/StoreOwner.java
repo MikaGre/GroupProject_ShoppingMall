@@ -1,23 +1,30 @@
 public class StoreOwner {
-    int storeID;
+    static int storeID=1;
     String storeOwnerName;
+    String storeName;
     int price;
   double sellingPrice;
 
-    public void requestNewStore(String storeName, String storeOwnerName)
-    {}
 
-    public void setItemPrice(int productId, double price)
+    public void requestNewStore()
     {
-        double markup = .15;
-       sellingPrice = price* markup;
+        ++storeID;
+        System.out.println("Hello " + storeOwnerName + ", Welcome to XYZ mall. congrats on opening of "+ storeName);
     }
-    public void closeStore()//
+
+    public StoreOwner(String storeName, String storeOwnerName)
+    {
+        this.storeOwnerName = storeOwnerName;
+        this.storeName = storeName;
+    }
+
+
+    public void closeStore()
     {}
     public void sale()
     {
         //item price brand , item price brand , item price brand
-        Inventory inventory = new Inventory();
+      Inventory inventory = new Inventory();
             Object[] inv = inventory.storeInventory.values().toArray();
         for (int i = 1; i < inv.length ; i+=3) {
            double salePrice = (double) inv[i];
@@ -25,6 +32,11 @@ public class StoreOwner {
         }
 
         }
+       public static void Main()
+       {
+           StoreOwner S1 = new StoreOwner("Facebook","Bob");
+           S1.requestNewStore();
+       }
     }
 
-}
+

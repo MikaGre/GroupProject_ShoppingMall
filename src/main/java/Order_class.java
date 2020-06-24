@@ -4,7 +4,7 @@ public class Order_class {
 
     public static void PlaceAnOrder() {
 
-        static int orderID = 0;
+        int orderID = 0;
         String customerName;
         int CustomerID;
 
@@ -17,7 +17,7 @@ public class Order_class {
         System.out.println("please enter your ID number");
         int ID = input.nextInt();
         System.out.println("please enter your shipping address");
-        int ID = input.nextInt();
+        int ID1 = input.nextInt();
         System.out.println("system is processing...");
 
 

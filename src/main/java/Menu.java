@@ -5,6 +5,7 @@ import java.util.Scanner;
 public class Menu {
     Scanner scanner = new Scanner(System.in);
     CreateAccount createAccount = new CreateAccount();
+    Inventory inventory = new Inventory();
 
 
     public void mainMenu() {
@@ -106,16 +107,16 @@ public class Menu {
 
         switch (menuSelect){
             case "a":
-                MallOwnerPractice.getStoreRequest();
+               // MallOwnerPractice.getStoreRequest();
                 break;
             case "b":
-                MallOwnerPractice.sendWarning();
+              //  MallOwnerPractice.sendWarning();
                 break;
             case "c":
-                MallOwnerPractice.forceStoreClose();
+             //   MallOwnerPractice.forceStoreClose();
                 break;
             case "d":
-                MallOwnerPractice.getStoreList();
+             //   MallOwnerPractice.getStoreList();
                 break;
             case "q":
                 mainMenu();
@@ -144,13 +145,16 @@ public class Menu {
                 String input = scanner.next().toLowerCase();
                   switch (input){
                       case "a":
-                          Inventory inventory = new Inventory();
-                          inventory.getStoreItems();
+
+                          inventory.searchItem();
+                          break;
                       case "b":
-                          String itemName = scanner.next();
-                          double price = scanner.nextDouble();
-                          int qty = scanner.nextInt();
-                          inventory.addStoreItem(itemName,price,qty);
+
+                          inventory.addStoreItem();
+                          break;
+                      default:
+                          System.out.println( menuSelect + " is not an action!");
+                          storeOwnerMenu();
                   }
                 break;
             case "c":
@@ -168,7 +172,7 @@ public class Menu {
 
     public void storeList() {
         StoreOwner storeOwner = new StoreOwner();
-        System.out.println(storeOwner.store.values());
+       // System.out.println(storeOwner.store.values());
 
     }
 

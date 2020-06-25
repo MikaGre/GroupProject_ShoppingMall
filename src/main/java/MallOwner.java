@@ -1,5 +1,6 @@
 
 
+import java.sql.SQLOutput;
 import java.util.*;
 
 public class MallOwner {
@@ -7,6 +8,7 @@ public class MallOwner {
     static int input;
     //static List<Integer> storeOwnerList = new ArrayList<>();
     public static Map<String, Integer[]> allStore = new HashMap<>();
+    public static Map<Integer,String> storeOwnerWarnings = new HashMap<>();
 
     public MallOwner() {
         do {
@@ -47,22 +49,19 @@ public class MallOwner {
 
     }
 
-    public void getStoreRequest() {
-   //     StoreOwner s1 = new StoreOwner();
-        String name;
-        String ownerName;
-        System.out.println("select 'store name'");
-        name = scanner.next();
-        System.out.println("select 'Store owner name'");
-        ownerName = scanner.next();
-        s1.requestNewStore(name, ownerName);
+    public static void getStoreRequest() {
+        System.out.println("\nNew Store Request");
+        for (Integer names: StoreOwner.storeRequestList.keySet())
+        {
+            System.out.println(Arrays.toString(StoreOwner.storeRequestList.get(names)));
+        }
 
     }
         public static void setStore () {
-            // allStore.put("bob", new Integer[]{22, 23});
-       //     StoreOwner s1 = new StoreOwner();
+            getStoreRequest();
+       StoreOwner s1 = new StoreOwner();
             String approveStore;
-            System.out.println("to approve please choose option 'yes' || to reject choose option 'no'");
+            System.out.println("to approve please choose option 'yes' or to reject choose option 'no'");
             approveStore = scanner.next();
             if (approveStore.equalsIgnoreCase("yes")) {
 
@@ -75,38 +74,32 @@ public class MallOwner {
             }
         }
         public static void sendWarning () {
-            String warning;
-            System.out.println("to send a warning to a store choose option 'yes' || else choose option 'no'");
-            warning = scanner.next();
-            if (warning.equalsIgnoreCase("yes")) {
-                String storeWarned;
-                System.out.println("select the 'Store owner's name to send the warning");
-                storeWarned = scanner.next();
-
-            }
+            System.out.println("Enter Store Name");
+            int storeID = scanner.nextInt();
+            System.out.println("Enter warning message");
+            String message = scanner.next();
+            storeOwnerWarnings.put(storeID,message);
 
         }
+
         public static void forceStoreClose () {
-            String toClose;
-            System.out.println("select the 'Store owner's name to close store");
-            toClose = scanner.next();
-            StoreOwner s1 = new StoreOwner();
-            //   s1.closeStore();
+            System.out.println("select the 'Store's ID to close store");
+            int  storeID = scanner.nextInt();
+            allStore.remove(storeID);
+            System.out.println("Store has been closed");
+
         }
+
         public static void getStoreList () {
-
-        //    StoreOwner s1 = new StoreOwner();
-
-            Map<String, Integer> allStore = new HashMap<>();
-            allStore.put(StoreOwner.StoreOwnerName, StoreOwner.storeId);
-
-            System.out.println(allStore);
+        System.out.println(allStore);
         }
+
         public static void getInventory() {
             Inventory i1 = new Inventory();
 
             System.out.println(i1.storeInventory);
         }
+
         public static void toLogout () {
             Menu m1 = new Menu();
             System.out.println("going back to login part");

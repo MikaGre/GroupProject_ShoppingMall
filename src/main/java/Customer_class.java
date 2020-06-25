@@ -38,16 +38,13 @@ public static void leaveStore(){
 
 }
 public static void enterStore(){
-
-   // getListStore();
-
-   // menu.getListStore();
-
-
-    Menu menu=new Menu();
-    menu.mainMenu();
-
+    MallOwner.getStoreList();
+    Scanner scanner = new Scanner(System.in);
+    System.out.println("Choose a store");
+    int storeKey = scanner.nextInt();
 
 
 }
+
+
 }

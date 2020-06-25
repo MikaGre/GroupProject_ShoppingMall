@@ -1,18 +1,17 @@
 import java.text.NumberFormat;
 import java.util.*;
 
-public class Inventory {
+public class Inventory{
 
     static int productID = 0;
     static int ID = 0;
     private double price;
     private int quantity;
-    int id;
+    int id; // Being used for scanner class
     public Inventory() {
     }
 
-
-    static Map<Integer, Object[]> storeInventory = new HashMap<>();
+    Map<Integer, Object[]> storeInventory = new HashMap<>();
 
 
     public int inventoryId(String productName, double price, int onHandQuantity) {
@@ -66,7 +65,7 @@ public class Inventory {
                 System.out.println("Please enter product price: ");
                 price = S2.nextDouble();
                 System.out.println("Please enter product Quantity");
-                onHandQuantity += S2.nextInt();
+                onHandQuantity = S2.nextInt();
                 storeInventory.put(ID, new Object[]{productName, price, onHandQuantity});
             }
         }
@@ -90,23 +89,20 @@ public class Inventory {
         Scanner S3 = new Scanner(System.in);
         System.out.println("Please enter the name of the item you are looking for");
         String item = S3.next().toLowerCase();
-        Integer foundItem = -1;
+        boolean foundItem = false;
         for (Integer k : storeInventory.keySet()) {
             Object[] itemsInfo = storeInventory.get(k);
-            if (itemsInfo[0] == item) {
-                foundItem=k;
+            if (itemsInfo[0].equals(item)) {
+                foundItem = true;
+                System.out.println("Item found");
                 break;
+                /*System.out.println("\nProduct Name: " + storeInventory.get(foundItem)[0] +
+                        "\nPrice: $" + storeInventory.get(foundItem)[1] +
+                        "\nQty: " + storeInventory.get(foundItem)[2]);*/
+                }
+            else {
+                System.out.println("No such item found");
             }
-        }
-        if(foundItem!=-1)
-        {
-            System.out.println("\nProduct Name: " + storeInventory.get(foundItem)[0] +
-                    "\nPrice: $" + storeInventory.get(foundItem)[1] +
-                    "\nQty: " + storeInventory.get(foundItem)[2]);
-        }
-        else
-        {
-            System.out.println("No such item found");
         }
     }
     public void getStoreItems()
@@ -121,12 +117,4 @@ public class Inventory {
 
     }
 
-    public static void main(String[] args) {
-        {
-            Inventory invent = new Inventory();
-           // invent.addStoreItem();
-           invent.searchItem();
-          //  invent.getStoreItems();
-        }
-    }
 }

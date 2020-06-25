@@ -6,6 +6,7 @@ public class Menu {
     Scanner scanner = new Scanner(System.in);
     CreateAccount createAccount = new CreateAccount();
     Inventory inventory = new Inventory();
+    public int userID = -1;
 
 
     public void mainMenu() {
@@ -27,10 +28,10 @@ public class Menu {
         System.out.println("Who are you? \n(A)Customer \n(B)Store Owner \n(C)Mall Owner");
         String menuSelect = scanner.next().toLowerCase();
         System.out.print("UserID: ");
-        String userID = scanner.next();
+        userID = scanner.nextInt();
         System.out.print("Password: ");
         String password = scanner.next();
-        boolean isCorrectLogin = createAccount.verfiyAccount(userID,password);
+        boolean isCorrectLogin = createAccount.verfiyAccount(Integer.toString(userID),password);
 
         if (isCorrectLogin = true) {
             switch (menuSelect) {
@@ -84,10 +85,10 @@ public class Menu {
 
         switch (menuSelect){
             case "a":
-                storeList();
+                MallOwner.getStoreList();
                 break;
             case "b":
-                cartDetails();
+
             case "q":
                 mainMenu();
                 break;
@@ -106,46 +107,17 @@ public class Menu {
     }
 
     public void mallOwnerMenu() {
-        System.out.println("Hello. Choose action: \n(A)Approve Store Request  \n(B)Send Warning " +
-                "\n(C)Close a Store \n(D)Store List \n(Q)Logout");
-
-        String menuSelect = scanner.next().toLowerCase();
-
-        switch (menuSelect){
-            case "a":
-<<<<<<< Updated upstream
-               // MallOwnerPractice.getStoreRequest();
-=======
-                /**MallOwnerPractice.getStoreRequest();
->>>>>>> Stashed changes
-                break;
-            case "b":
-              //  MallOwnerPractice.sendWarning();
-                break;
-            case "c":
-             //   MallOwnerPractice.forceStoreClose();
-                break;
-            case "d":
-<<<<<<< Updated upstream
-             //   MallOwnerPractice.getStoreList();
-=======
-                MallOwnerPractice.getStoreList();*/
->>>>>>> Stashed changes
-                break;
-            case "q":
-                mainMenu();
-                break;
-            default:
-                System.out.println( menuSelect + " is not an action!");
-                mallOwnerMenu();
-                break;
-
-
-        }
+      MallOwner M1 = new MallOwner();
     }
 
     public void storeOwnerMenu() {
         Inventory inventory=new Inventory();
+        for (Integer storeID :MallOwner.storeOwnerWarnings.keySet()) {
+            if (storeID == userID ) {
+                System.out.println(MallOwner.storeOwnerWarnings.get(storeID));
+            }
+        }
+
         System.out.println("Hello. Choose action: \n(A)Request New Store  \n(B)Inventory " +
                 "\n(C)Close Store \n(Q)Logout");
 
@@ -156,18 +128,16 @@ public class Menu {
               //  storeRequest();
                 break;
             case "b":
-                System.out.println("(A)List Inventory \n(B)Add Items");
+                System.out.println("(A)Search Items  \n(B)Get list of Items \n(C)Add Items");
                 String input = scanner.next().toLowerCase();
                   switch (input){
                       case "a":
-
-<<<<<<< Updated upstream
                           inventory.searchItem();
                           break;
-=======
-                          inventory.getStoreItems();
->>>>>>> Stashed changes
                       case "b":
+                         inventory.getStoreItems();
+                         break;
+                      case "c":
 
                           inventory.addStoreItem();
                           break;
@@ -185,26 +155,6 @@ public class Menu {
                 storeOwnerMenu();
                 break;
 
-
         }
     }
-
-    public void storeList() {
-        StoreOwner storeOwner = new StoreOwner();
-<<<<<<< Updated upstream
-       // System.out.println(storeOwner.store.values());
-=======
-
->>>>>>> Stashed changes
-
-    }
-
-    public void cartDetails () {
-
-        ShoppingCart shoppingCart = new ShoppingCart();
-        shoppingCart.getShoppingCart();
-    }
-
-
-
 }

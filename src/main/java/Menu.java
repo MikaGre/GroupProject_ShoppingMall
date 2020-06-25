@@ -10,21 +10,21 @@ public class Menu {
 
 
     public void mainMenu() {
-        System.out.println("Welcome! \n(A)Login \n(B)Create Account");
+        System.out.println("Welcome! Choose Menu \n(A)Customer \n(B)Store Owner \n(C)Mall Owner");
         String menuSelect = scanner.next().toLowerCase();
 
         switch (menuSelect){
-            case"a":
-                loginMenu();
-                break;
+            case "a":
+                customerMenu();
             case "b":
-                createAccountMenu();
-                break;
+                storeOwnerMenu();
+            case "c":
+                mallOwnerMenu();
         }
 
     }
 
-    public void loginMenu() {
+   /* public void loginMenu() {
         System.out.println("Who are you? \n(A)Customer \n(B)Store Owner \n(C)Mall Owner");
         String menuSelect = scanner.next().toLowerCase();
         System.out.print("UserID: ");
@@ -44,9 +44,9 @@ public class Menu {
 
             }
         }
-    }
+    }*/
 
-    public void createAccountMenu() {
+  /*   public void createAccountMenu() {
         Scanner scanner = new Scanner(System.in);
         System.out.print("Enter a UserName: ");
         String userName = scanner.next();
@@ -77,7 +77,7 @@ public class Menu {
         createAccount.addAccount(accType,userName,password);
         System.out.println("***Account has been created***");
         mainMenu();
-    }
+    }*/
 
     public void customerMenu() {
         System.out.println("Hello. Choose action: \n(A)Visit Store \n(B)View Shopping Cart  \n(D)Edit account details \n(P)Payment  \n(Q)Logout");

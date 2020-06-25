@@ -14,14 +14,16 @@ public class StoreOwner {
 
     public StoreOwner()
     {
+        CreateAccount createAccount = new CreateAccount();
         ++storeID;
         System.out.println("Please enter your name");
         this.storeOwnerName = S1.next();
         System.out.println("Please enter your Store name");
         this.storeName = S1.next();
-        System.out.println("Store request has been sent to Mall Owner");
+        //System.out.println("Store request has been sent to Mall Owner");
         storeRequestList.put(storeID,new String[]{storeOwnerName,storeName});
         inventory = new Inventory(storeID);
+        createAccount.addAccount("Store Owner",storeOwnerName,storeName);
 
     }
 

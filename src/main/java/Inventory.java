@@ -5,11 +5,13 @@ public class Inventory{
 
     static int productID = 0;
     static int ID = 0;
-    private double price;
+    static double price;
     private int quantity;
     int id; // Being used for scanner class
+    static String prouductName;
     public Inventory(int storeid) {}
     public Inventory(){}
+    public Inventory(String productName,int onHandQuantity){}
 
     Map<Integer, Object[]> storeInventory = new HashMap<>();
 
@@ -50,7 +52,7 @@ public class Inventory{
 
 
     public void addStoreItem() {
-
+        InvSheet invSheet = new InvSheet();
         String productName;
         int onHandQuantity = 0;
         Integer val1 = 0;
@@ -67,6 +69,7 @@ public class Inventory{
                 System.out.println("Please enter product Quantity");
                 onHandQuantity = S2.nextInt();
                 storeInventory.put(ID, new Object[]{productName, price, onHandQuantity});
+                invSheet.addItem(ID,productID,productName,price,onHandQuantity);
             }
         }
         catch(InputMismatchException e)

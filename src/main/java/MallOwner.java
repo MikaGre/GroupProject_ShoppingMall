@@ -77,6 +77,7 @@ public class MallOwner {
                 }
             }
         }
+
         public static void sendWarning () {
             System.out.println("Enter Store Name");
             int storeID = scanner.nextInt();
@@ -94,7 +95,9 @@ public class MallOwner {
         }
 
         public static void getStoreList () {
-            allStore.forEach((k,v)-> System.out.println(k + Arrays.toString(v)));
+            //allStore.forEach((k,v)-> System.out.println(k + Arrays.toString(v)));
+            CreateAccount c = new CreateAccount();
+            c.storeList();
         }
 
         public static void getInventory() {

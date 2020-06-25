@@ -7,14 +7,12 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
-public class CreateAccount extends Inventory{
+public class CreateAccount {
     //Scanner scanner = new Scanner(System.in);
     Inventory accID;
-    private  XSSFSheet sheet;
+    private XSSFSheet sheet;
     private final String filename = "Account Information.xlsx";
 
 
@@ -31,20 +29,20 @@ public class CreateAccount extends Inventory{
 
     }
 
-    private void createSpreadsheet() {
+    private void createSpreadsheet () {
         XSSFWorkbook workbook = new XSSFWorkbook();
         sheet = workbook.createSheet();
         XSSFRow row = sheet.createRow(0);
         XSSFCell accountType = row.createCell(0);
         accountType.setCellValue("AccountType");
         XSSFCell fullName = row.createCell(1);
-        fullName.setCellValue("UserID");
-        XSSFCell password = row.createCell(2);
-        password.setCellValue("Password");
+        fullName.setCellValue("StoreOwnerName");
+        XSSFCell storeName = row.createCell(2);
+        storeName.setCellValue("StoreName");
         save();
     }
 
-    public void addAccount (String accountType, String fullName, String password) {
+    public void addAccount (String accountType, String fullName, String storeName) {
         int newRowIndex = sheet.getPhysicalNumberOfRows();
         XSSFRow newRow = sheet.createRow(newRowIndex);
 
@@ -52,37 +50,37 @@ public class CreateAccount extends Inventory{
         accountTypeCell.setCellValue(accountType);
         XSSFCell fullNameCell = newRow.createCell(1);
         fullNameCell.setCellValue(fullName);
-        XSSFCell passwordCell = newRow.createCell(2);
-        passwordCell.setCellValue(password);
+        XSSFCell storeNameCell = newRow.createCell(2);
+        storeNameCell.setCellValue(storeName);
         save();
 
         accID = new Inventory();
     }
 
-    public boolean verfiyAccount (String name, String password) {
-        String tempUserName  = "";
-        String tempPassword = "";
-        List<String> userInfo = new ArrayList<>();
+    public boolean verfiyStore (String storeOwnerName, String storeName) {
+        String tempUserName = "";
+        String tempStore = "";
+        List<String> storeInfo = new ArrayList<>();
         boolean found = false;
         try {
             FileInputStream file = new FileInputStream(filename);
             XSSFWorkbook workbook = new XSSFWorkbook(file);
-            XSSFSheet sheet = workbook.getSheet("users");
+            XSSFSheet sheet = workbook.getSheet("stores");
             Sheet usersSheet = workbook.getSheetAt(0);
 
-            int rowCount = usersSheet.getLastRowNum()-usersSheet.getFirstRowNum();
+            int rowCount = usersSheet.getLastRowNum() - usersSheet.getFirstRowNum();
 
-            for (int i = 1; i < rowCount+1; i++) {
+            for (int i = 1; i < rowCount + 1; i++) {
                 Row row = usersSheet.getRow(i);
-                for (int j = 1 ; j < row.getLastCellNum(); j++) {
-                    userInfo.add(row.getCell(j).getStringCellValue());
+                for (int j = 1; j < row.getLastCellNum(); j++) {
+                    storeInfo.add(row.getCell(j).getStringCellValue());
                 }
             }
-            if (userInfo.contains(name) && userInfo.contains(password)) {
-                System.out.println("Welcome " + name);
+            if (storeInfo.contains(storeOwnerName) && storeInfo.contains(storeName)) {
+                System.out.println("Welcome " + storeOwnerName);
                 found = true;
             } else {
-                System.out.println("Incorrect login");
+                System.out.println("Store not Found");
                 Menu menu = new Menu();
                 menu.mainMenu();
             }
@@ -93,7 +91,32 @@ public class CreateAccount extends Inventory{
         return found;
     }
 
-    private void save() {
+    public void storeList () {
+        Map<String,String> listOfStores = new HashMap<>();
+        //List<String> storeInfo = new ArrayList<>();
+        String name = null;
+        String store = null;
+
+        try {
+            FileInputStream file = new FileInputStream(filename);
+            XSSFWorkbook workbook = new XSSFWorkbook(file);
+            XSSFSheet sheet = workbook.getSheet("stores");
+            Sheet usersSheet = workbook.getSheetAt(0);
+
+            int rowCount = usersSheet.getLastRowNum() - usersSheet.getFirstRowNum();
+
+            for (int i = 1; i < rowCount + 1; i++) {
+                Row row = usersSheet.getRow(i);
+                for (int j = 1; j < row.getLastCellNum(); j++) {
+                    listOfStores.put(row.getCell(1).getStringCellValue(),row.getCell(2).getStringCellValue());
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        listOfStores.forEach((k,v) -> System.out.println("\nStore Owner:" + k + " ==> Store Name:" + v));
+    }
+        private void save() {
         try {
             FileOutputStream outStream = new FileOutputStream(filename);
             sheet.getWorkbook().write(outStream);

@@ -2,16 +2,20 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
-public class Customer_class {
+public class Customer_class  extends Order_class{
 String customerName;
 String address;
 String email;
 String creditCardInfo;
+Order_class order;
 
 static int accID = 0;
 static Map<Integer,String[]> custAccountInfo = new HashMap<>();
 
-
+public void Customer_Class(){
+    orderID++;
+   // order = new Order_class();
+}
 
 public static void accountDetails(){
     Scanner input = new Scanner(System.in);

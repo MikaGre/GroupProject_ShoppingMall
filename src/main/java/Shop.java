@@ -19,7 +19,7 @@ public class Shop extends Inventory{
    while (keepShopping.equals("y"))
     System.out.print("Enter the name of the item: ");
    productName = scan.next();
-    //itemPrice = this.getPrice();
+    itemPrice = this.itemPrice;
     System.out.print("Enter the quantity: ");
     quantity = scan.nextInt();
 
@@ -49,6 +49,7 @@ public class Shop extends Inventory{
     System.out.print("Continue shopping (y/n)? ");
     keepShopping = scan.next().toLowerCase();
   }
+
 }
 
 

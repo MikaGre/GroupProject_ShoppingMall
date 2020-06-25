@@ -55,22 +55,26 @@ public class MallOwner {
         {
             System.out.println(Arrays.toString(StoreOwner.storeRequestList.get(names)));
         }
-
     }
         public static void setStore () {
-            getStoreRequest();
-       StoreOwner s1 = new StoreOwner();
-            String approveStore;
-            System.out.println("to approve please choose option 'yes' or to reject choose option 'no'");
-            approveStore = scanner.next();
-            if (approveStore.equalsIgnoreCase("yes")) {
+            System.out.println("Choose owner to approve");
+            String storeOwnerName = scanner.next();
+            for (Integer k : StoreOwner.storeRequestList.keySet()) {
+                if (StoreOwner.storeRequestList.get(k)[0].contains(storeOwnerName)) {
+                    String approveStore;
+                    System.out.println("to approve please choose option 'yes' or to reject choose option 'no'");
+                    approveStore = scanner.next();
+                    if (approveStore.equalsIgnoreCase("yes")) {
+                        StoreOwner.storeID++;
+                        allStore.put(StoreOwner.storeOwnerName, new Integer[]{StoreOwner.storeID});
+                        System.out.println("Approved new store for " + StoreOwner.storeOwnerName + " with the Id : " + StoreOwner.storeID);
+                    } else if (approveStore.equalsIgnoreCase("no")) {
+                        System.out.println("Request for new store by " + StoreOwner.storeOwnerName + " is rejected");
 
-                s1.storeID++;
-                allStore.put(s1.storeOwnerName, new Integer[]{s1.storeID});
-                System.out.println("Approved new store for " + s1.storeOwnerName + " with the Id : " + s1.storeID);
-            } else if (approveStore.equalsIgnoreCase("no")) {
-                System.out.println("Request for new store by " + s1.storeOwnerName + " is rejected");
-
+                    }
+                } else {
+                    System.out.println(storeOwnerName + " has not requested a store");
+                }
             }
         }
         public static void sendWarning () {
@@ -79,7 +83,6 @@ public class MallOwner {
             System.out.println("Enter warning message");
             String message = scanner.next();
             storeOwnerWarnings.put(storeID,message);
-
         }
 
         public static void forceStoreClose () {
@@ -91,13 +94,12 @@ public class MallOwner {
         }
 
         public static void getStoreList () {
-        System.out.println(allStore);
+            allStore.forEach((k,v)-> System.out.println(k + Arrays.toString(v)));
         }
 
         public static void getInventory() {
-            Inventory i1 = new Inventory();
+            System.out.println("Choose Store");
 
-            System.out.println(i1.storeInventory);
         }
 
         public static void toLogout () {

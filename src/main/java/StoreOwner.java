@@ -1,19 +1,19 @@
 import java.util.HashMap;
 import java.util.Scanner;
 
-public class StoreOwner extends Inventory{
+public class StoreOwner {
     static int storeID=1;
-    String storeOwnerName;
+    static String storeOwnerName;
     String storeName;
     int price;
-  double sellingPrice;
+    double sellingPrice;
+    Inventory inventory;
     Scanner S1 = new Scanner(System.in);
 
     public static HashMap <Integer, String[]> storeRequestList = new HashMap<>();
 
     public StoreOwner()
     {
-
         ++storeID;
         System.out.println("Please enter your name");
         this.storeOwnerName = S1.next();
@@ -21,8 +21,8 @@ public class StoreOwner extends Inventory{
         this.storeName = S1.next();
         System.out.println("Store request has been sent to Mall Owner");
         storeRequestList.put(storeID,new String[]{storeOwnerName,storeName});
+        inventory = new Inventory(storeID);
 
-        Inventory inventory = new Inventory();
     }
 
     public void sendStoreRequest() {
@@ -37,7 +37,6 @@ public class StoreOwner extends Inventory{
     public void sale()
     {
         //item price brand , item price brand , item price brand
-      Inventory inventory = new Inventory();
             Object[] inv = inventory.storeInventory.values().toArray();
         for (int i = 1; i < inv.length ; i+=3) {
            double salePrice = (double) inv[i];
@@ -45,11 +44,6 @@ public class StoreOwner extends Inventory{
         }
 
         }
-//       public static void Main()
-//       {
-//           StoreOwner S1 = new StoreOwner("Facebook","Bob");
-//           S1.requestNewStore();
-//       }
     }
 
 

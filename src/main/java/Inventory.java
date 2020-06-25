@@ -8,8 +8,8 @@ public class Inventory{
     private double price;
     private int quantity;
     int id; // Being used for scanner class
-    public Inventory() {
-    }
+    public Inventory(int storeid) {}
+    public Inventory(){}
 
     Map<Integer, Object[]> storeInventory = new HashMap<>();
 

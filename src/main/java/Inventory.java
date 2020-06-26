@@ -70,7 +70,7 @@ public class Inventory{
                 price = S2.nextDouble();
                 System.out.println("Please enter product Quantity");
                 onHandQuantity = S2.nextInt();
-                //storeInventory.put(ID, new Object[]{productName, price, onHandQuantity});
+                storeInventory.put(ID, new Object[]{productName, price, onHandQuantity});
                 invSheet.addItem(StoreOwner.storeID,storeName,productID,productName,price,onHandQuantity);
             }
         }

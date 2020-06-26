@@ -88,7 +88,7 @@ public class Menu {
                 MallOwner.getStoreList();
                 break;
             case "b":
-                Order_class.order();
+               // Order_class.order();
             case "q":
                 mainMenu();
                 break;

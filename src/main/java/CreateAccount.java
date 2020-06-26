@@ -76,7 +76,7 @@ public class CreateAccount {
                 }
             }
             if (storeInfo.contains(storeName)) {
-                System.out.println("***Welcome***");
+                System.out.println("***Welcome to " + storeName + "***");
                 InvSheet i = new InvSheet();
                 i.enterStore(storeName);
 

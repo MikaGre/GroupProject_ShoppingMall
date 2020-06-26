@@ -48,6 +48,9 @@ public static void enterStore(){
     System.out.println("Choose Store");
     String storeName = scanner.next();
     ca.verfiyStore(storeName);
+    Order_class o = new Order_class();
+    o.order();
+
 
 
 }

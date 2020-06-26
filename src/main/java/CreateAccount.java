@@ -77,7 +77,9 @@ public class CreateAccount {
             }
             if (storeInfo.contains(storeName)) {
                 System.out.println("***Welcome***");
-                isAStore = true;
+                InvSheet i = new InvSheet();
+                i.enterStore(storeName);
+
             } else {
                 System.out.println("Store not Found");
                 Menu menu = new Menu();
@@ -85,17 +87,6 @@ public class CreateAccount {
             }
         } catch (Exception e) {
             e.printStackTrace();
-        }
-
-        if (isAStore = true) {
-            Scanner s = new Scanner(System.in);
-            InvSheet i = new InvSheet();
-            System.out.println("****Items in stock*****");
-            i.itemList();
-            System.out.println("Select an item from list");
-            String customerPick = s.next();
-            i.verfiyItem(customerPick);
-            System.out.println("***Item added to cart***");
         }
     }
 

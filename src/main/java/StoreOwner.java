@@ -4,7 +4,7 @@ import java.util.Scanner;
 public class StoreOwner {
     static int storeID=1;
     static String storeOwnerName;
-    String storeName;
+    static String storeName;
     int price;
     double sellingPrice;
     Inventory inventory;
@@ -13,9 +13,7 @@ public class StoreOwner {
 
     public static HashMap <Integer, String[]> storeRequestList = new HashMap<>();
 
-    public StoreOwner()
-
-    {
+    public StoreOwner() {
         CreateAccount createAccount = new CreateAccount();
         ++storeID;
         System.out.println("Please enter your name");

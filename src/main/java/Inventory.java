@@ -50,13 +50,15 @@ public class Inventory{
         System.out.println(storeInventory.keySet());
         }
 
-
     public void addStoreItem() {
         InvSheet invSheet = new InvSheet();
+        String storeName = null;
         String productName;
         int onHandQuantity = 0;
         Integer val1 = 0;
         Scanner S2 = new Scanner(System.in);
+        System.out.println("Enter Your Store Name");
+        storeName = S2.next();
         try {
             System.out.println("How many items will you like to add?");
             val1 = S2.nextInt();
@@ -69,7 +71,7 @@ public class Inventory{
                 System.out.println("Please enter product Quantity");
                 onHandQuantity = S2.nextInt();
                 //storeInventory.put(ID, new Object[]{productName, price, onHandQuantity});
-                invSheet.addItem(StoreOwner.storeID,productID,productName,price,onHandQuantity);
+                invSheet.addItem(StoreOwner.storeID,storeName,productID,productName,price,onHandQuantity);
             }
         }
         catch(InputMismatchException e)
@@ -108,6 +110,7 @@ public class Inventory{
             }
         }
     }
+
     public void getStoreItems()
     {
         for (Integer k : storeInventory.keySet()) {

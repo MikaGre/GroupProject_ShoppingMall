@@ -36,35 +36,39 @@ public class InvSheet {
         XSSFRow row = sheet.createRow(0);
         XSSFCell storeID = row.createCell(0);
         storeID.setCellValue("StoreID");
-        XSSFCell productID = row.createCell(1);
+        XSSFCell storeName = row.createCell(1);
+        storeName.setCellValue("StoreName");
+        XSSFCell productID = row.createCell(2);
         productID.setCellValue("ProductID");
-        XSSFCell productName = row.createCell(2);
+        XSSFCell productName = row.createCell(3);
         productName.setCellValue("ProductName");
-        XSSFCell productPrice = row.createCell(3);
+        XSSFCell productPrice = row.createCell(4);
         productPrice.setCellValue("ProductPrice");
-        XSSFCell productQTY = row.createCell(4);
+        XSSFCell productQTY = row.createCell(5);
         productQTY.setCellValue("ProductQTY");
         save();
     }
 
-    public void addItem (int storeID, int productID, String productName, double price, int qty) {
+    public void addItem (int storeID, String storeName,int productID, String productName, double price, int qty) {
         int newRowIndex = sheet.getPhysicalNumberOfRows();
         XSSFRow newRow = sheet.createRow(newRowIndex);
 
-        String store = Integer.toString(StoreOwner.storeID);
+        String storeid = Integer.toString(StoreOwner.storeID);
         String product = Integer.toString(productID);
         String pPrice = Double.toString(price);
         String pQTY = Integer.toString(qty);
 
         XSSFCell storeIDCell = newRow.createCell(0);
-        storeIDCell.setCellValue(store);
-        XSSFCell productIDCell = newRow.createCell(1);
+        storeIDCell.setCellValue(storeid);
+        XSSFCell storeNameCell = newRow.createCell(1);
+        storeNameCell.setCellValue(storeName);
+        XSSFCell productIDCell = newRow.createCell(2);
         productIDCell.setCellValue(product);
-        XSSFCell productNameCell = newRow.createCell(2);
+        XSSFCell productNameCell = newRow.createCell(3);
         productNameCell.setCellValue(productName);
-        XSSFCell productPriceCell = newRow.createCell(3);
+        XSSFCell productPriceCell = newRow.createCell(4);
         productPriceCell.setCellValue(pPrice);
-        XSSFCell qtyCell = newRow.createCell(4);
+        XSSFCell qtyCell = newRow.createCell(5);
         qtyCell.setCellValue(pQTY);
         save();
 
@@ -118,7 +122,7 @@ public class InvSheet {
             for (int i = 1; i < rowCount + 1; i++) {
                 Row row = usersSheet.getRow(i);
                 for (int j = 1; j < row.getLastCellNum(); j++) {
-                    storeInfo.put(row.getRowNum(),new String[]{row.getCell(2).getStringCellValue(),"$"+row.getCell(3).getStringCellValue()});
+                    storeInfo.put(row.getRowNum(),new String[]{row.getCell(3).getStringCellValue(),"$"+row.getCell(4).getStringCellValue()});
                 }
             }
         }catch (Exception e) {
@@ -128,11 +132,10 @@ public class InvSheet {
         storeInfo.forEach((k,v) -> System.out.println(k + " ==> " + Arrays.toString(v)));
     }
 
-    public void getPrice () {
-        List<String> itemInfo = new ArrayList<>();
-        String itemName = null;
-        String price;
-        //boolean found = false;
+    public void enterStore(String store) {
+        Map<Integer,String[]> storeInv = new HashMap<>();
+        String sNAME = null;
+
         try {
             FileInputStream file = new FileInputStream(filename);
             XSSFWorkbook workbook = new XSSFWorkbook(file);
@@ -141,23 +144,18 @@ public class InvSheet {
 
             int rowCount = itemSheet.getLastRowNum() - itemSheet.getFirstRowNum();
 
-            for (int i = 2; i < rowCount + 1; i++) {
+            for (int i = 1; i < rowCount + 1; i++) {
                 Row row = itemSheet.getRow(i);
-                for (int j = 2; j < row.getLastCellNum(); j++) {
-                    itemInfo.add(row.getCell(j).getStringCellValue());
-
-                    if (itemInfo.contains(itemName)) {
-                        System.out.println(itemInfo.get(j));
-                    } else {
-                        System.out.println("No such Item found");
-                        Menu menu = new Menu();
-                        menu.mainMenu();
-                    }
+                for (int j = 1; j < row.getLastCellNum(); j++) {
+                     if (row.getCell(j).getStringCellValue().equalsIgnoreCase(store)){
+                         storeInv.put(row.getRowNum(),new String[]{row.getCell(3).getStringCellValue(),"$"+row.getCell(4).getStringCellValue()});
+                     }
                 }
-             }
-        } catch(Exception e){
+            }
+        } catch (Exception e) {
             e.printStackTrace();
         }
+        storeInv.forEach((k,v) -> System.out.println(Arrays.toString(v)));
     }
 
     private void save () {

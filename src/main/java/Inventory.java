@@ -68,8 +68,8 @@ public class Inventory{
                 price = S2.nextDouble();
                 System.out.println("Please enter product Quantity");
                 onHandQuantity = S2.nextInt();
-                storeInventory.put(ID, new Object[]{productName, price, onHandQuantity});
-                invSheet.addItem(ID,productID,productName,price,onHandQuantity);
+                //storeInventory.put(ID, new Object[]{productName, price, onHandQuantity});
+                invSheet.addItem(StoreOwner.storeID,productID,productName,price,onHandQuantity);
             }
         }
         catch(InputMismatchException e)

@@ -6,8 +6,7 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class InvSheet {
 
@@ -18,6 +17,7 @@ public class InvSheet {
 
 
     public InvSheet () {
+
         try {
             FileInputStream file = new FileInputStream(new File(filename));
             XSSFWorkbook workbook = new XSSFWorkbook(file);
@@ -51,7 +51,7 @@ public class InvSheet {
         int newRowIndex = sheet.getPhysicalNumberOfRows();
         XSSFRow newRow = sheet.createRow(newRowIndex);
 
-        String store = Integer.toString(storeID);
+        String store = Integer.toString(StoreOwner.storeID);
         String product = Integer.toString(productID);
         String pPrice = Double.toString(price);
         String pQTY = Integer.toString(qty);
@@ -70,10 +70,10 @@ public class InvSheet {
 
     }
 
-    public boolean verfiyItem (String name, String password) {
+    public boolean verfiyItem (String name) {
         List<String> itemInfo = new ArrayList<>();
-        String itemName;
-        String price;
+        String itemName = null;
+        String iprice = null;
         boolean found = false;
         try {
             FileInputStream file = new FileInputStream(filename);
@@ -87,10 +87,11 @@ public class InvSheet {
                 Row row = itemSheet.getRow(i);
                 for (int j = 1; j < row.getLastCellNum(); j++) {
                     itemInfo.add(row.getCell(j).getStringCellValue());
+                    itemName = row.getCell(j).getStringCellValue();
                 }
             }
-            if (itemInfo.contains(name) && itemInfo.contains(password)) {
-                System.out.println("Welcome " + name);
+            if (itemInfo.contains(name)) {
+                System.out.println("Item found");
                 found = true;
             } else {
                 System.out.println("Incorrect login");
@@ -102,6 +103,29 @@ public class InvSheet {
         }
 
         return found;
+    }
+
+    public void itemList () {
+        Map<Integer,String[]>storeInfo = new HashMap<>();
+        try {
+            FileInputStream file = new FileInputStream(filename);
+            XSSFWorkbook workbook = new XSSFWorkbook(file);
+            XSSFSheet sheet = workbook.getSheet("stores");
+            Sheet usersSheet = workbook.getSheetAt(0);
+
+            int rowCount = usersSheet.getLastRowNum() - usersSheet.getFirstRowNum();
+
+            for (int i = 1; i < rowCount + 1; i++) {
+                Row row = usersSheet.getRow(i);
+                for (int j = 1; j < row.getLastCellNum(); j++) {
+                    storeInfo.put(row.getRowNum(),new String[]{row.getCell(2).getStringCellValue(),"$"+row.getCell(3).getStringCellValue()});
+                }
+            }
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        storeInfo.forEach((k,v) -> System.out.println(k + " ==> " + Arrays.toString(v)));
     }
 
     public void getPrice () {
@@ -135,7 +159,8 @@ public class InvSheet {
             e.printStackTrace();
         }
     }
-        private void save () {
+
+    private void save () {
             try {
                 FileOutputStream outStream = new FileOutputStream(filename);
                 sheet.getWorkbook().write(outStream);

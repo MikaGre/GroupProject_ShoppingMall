@@ -6,19 +6,21 @@ import java.util.Scanner;
 public class Order_class{
 
     static int orderID = 0;
+    private static int quantity;
     String customerName;
     int CustomerID;
     static int priceOfTheItem;
     static double itemPrice, fSubTotal, fTotal, fTax;
-    String keepShopping;
-    int quantity;
+    static String keepShopping;
 
     Scanner scanner = new Scanner(System.in);
     //ArrayList<Inventory> cart = new ArrayList<>();
 
-    public void order (){
+    public static void order (){
+        Scanner scanner = new Scanner(System.in);
         ArrayList<Inventory> cart = new ArrayList<>();
         InvSheet invSheet = new InvSheet();
+
         while (keepShopping.equals("y"))
         System.out.print("Enter the name of the item: ");
         String prouductName = scanner.next();

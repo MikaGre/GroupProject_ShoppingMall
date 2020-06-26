@@ -57,11 +57,10 @@ public class CreateAccount {
         accID = new Inventory();
     }
 
-    public boolean verfiyStore (String storeOwnerName, String storeName) {
-        String tempUserName = "";
+    public void verfiyStore (String storeName) {
+        boolean isAStore = false;
         String tempStore = "";
         List<String> storeInfo = new ArrayList<>();
-        boolean found = false;
         try {
             FileInputStream file = new FileInputStream(filename);
             XSSFWorkbook workbook = new XSSFWorkbook(file);
@@ -76,9 +75,9 @@ public class CreateAccount {
                     storeInfo.add(row.getCell(j).getStringCellValue());
                 }
             }
-            if (storeInfo.contains(storeOwnerName) && storeInfo.contains(storeName)) {
-                System.out.println("Welcome " + storeOwnerName);
-                found = true;
+            if (storeInfo.contains(storeName)) {
+                System.out.println("***Welcome***");
+                isAStore = true;
             } else {
                 System.out.println("Store not Found");
                 Menu menu = new Menu();
@@ -88,7 +87,16 @@ public class CreateAccount {
             e.printStackTrace();
         }
 
-        return found;
+        if (isAStore = true) {
+            Scanner s = new Scanner(System.in);
+            InvSheet i = new InvSheet();
+            System.out.println("****Items in stock*****");
+            i.itemList();
+            System.out.println("Select an item from list");
+            String customerPick = s.next();
+            i.verfiyItem(customerPick);
+            System.out.println("***Item added to cart***");
+        }
     }
 
     public void storeList () {
@@ -116,7 +124,8 @@ public class CreateAccount {
         }
         listOfStores.forEach((k,v) -> System.out.println("\nStore Owner:" + k + " ==> Store Name:" + v));
     }
-        private void save() {
+
+    private void save() {
         try {
             FileOutputStream outStream = new FileOutputStream(filename);
             sheet.getWorkbook().write(outStream);

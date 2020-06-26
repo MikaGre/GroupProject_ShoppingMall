@@ -8,11 +8,13 @@ public class StoreOwner {
     int price;
     double sellingPrice;
     Inventory inventory;
+    InvSheet invSheet;
     Scanner S1 = new Scanner(System.in);
 
     public static HashMap <Integer, String[]> storeRequestList = new HashMap<>();
 
     public StoreOwner()
+
     {
         CreateAccount createAccount = new CreateAccount();
         ++storeID;
@@ -24,7 +26,7 @@ public class StoreOwner {
         storeRequestList.put(storeID,new String[]{storeOwnerName,storeName});
         inventory = new Inventory(storeID);
         createAccount.addAccount("Store Owner",storeOwnerName,storeName);
-
+        invSheet = new InvSheet();
     }
 
     public void sendStoreRequest() {

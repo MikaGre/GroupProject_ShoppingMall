@@ -14,7 +14,7 @@ static Map<Integer,String[]> custAccountInfo = new HashMap<>();
 
 public void Customer_Class(){
     orderID++;
-   // order = new Order_class();
+    order = new Order_class();
 }
 
 public static void accountDetails(){
@@ -42,10 +42,12 @@ public static void leaveStore(){
 
 }
 public static void enterStore(){
+    CreateAccount ca = new CreateAccount();
     MallOwner.getStoreList();
     Scanner scanner = new Scanner(System.in);
-    System.out.println("Choose a store");
-    int storeKey = scanner.nextInt();
+    System.out.println("Choose Store");
+    String storeName = scanner.next();
+    ca.verfiyStore(storeName);
 
 
 }

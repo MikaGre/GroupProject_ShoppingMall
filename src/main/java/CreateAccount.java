@@ -118,7 +118,8 @@ public class CreateAccount {
     }
 
     public void deleteStore () {
-        Map<Integer, String[]> store = new HashMap<>();
+        //Map<Integer, String[]> store = new HashMap<>();
+        List<Object> store = new ArrayList<>();
         try {
             FileInputStream file = new FileInputStream(filename);
             XSSFWorkbook workbook = new XSSFWorkbook(file);
@@ -126,19 +127,36 @@ public class CreateAccount {
             Sheet itemSheet = workbook.getSheetAt(0);
 
             int rowCount = itemSheet.getLastRowNum() - itemSheet.getFirstRowNum();
+            System.out.println("||   RowNumber     || StoreOwnerName   || StoreName        |");
+            System.out.println("-------------------------------------------------------------");
 
             for (int i = 1; i < rowCount + 1; i++) {
                 Row row = itemSheet.getRow(i);
+                System.out.printf("| %-15s  |",row.getRowNum());
                 for (int j = 1; j < row.getLastCellNum(); j++) {
-                    store.put(row.getRowNum(), new String[]{row.getCell(1).getStringCellValue(), row.getCell(2).getStringCellValue()});
+                    //store.put(row.getRowNum(), new String[]{row.getCell(1).getStringCellValue(), row.getCell(2).getStringCellValue()});
+                    //store.add(row.getRowNum(), new String[]{row.getCell(1).getStringCellValue(), row.getCell(2).getStringCellValue()});
+                   //System.out.printf("| %-15s |\n" + store);
+
+                    System.out.printf("| %-15s  |",row.getCell(j).getStringCellValue());
+
                 }
+                System.out.println();
             }
+
+            System.out.println("\nSelect Store to Force Close(Choose by Row Number)");
+            int forceClose = scanner.nextInt()+1;
+            XSSFRow removingRow = (XSSFRow) itemSheet.getRow(forceClose);
+            if(removingRow!=null){
+                itemSheet.removeRow(removingRow);
+            }
+
         } catch (Exception e) {
             e.printStackTrace();
         }
-        store.forEach((k, v) -> System.out.println(Arrays.toString(v)));
-        System.out.println("Select Store to Force Close(Choose by Row Number)");
-        String forceClose = scanner.next();
+        //store.forEach((k, v) -> System.out.println(Arrays.toString(v)));
+
+
     }
 
     private void save() {

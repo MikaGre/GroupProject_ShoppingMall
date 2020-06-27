@@ -12,7 +12,9 @@ public class MainApp {
 
 //Customer_class c1 = new Customer_class();
 //Customer_class.enterStore();
-        MallOwner.getInventory();
+        //MallOwner.getInventory();
+        MallOwner.forceStoreClose();
+        MallOwner.forceStoreClose();
 
 
 //        do {

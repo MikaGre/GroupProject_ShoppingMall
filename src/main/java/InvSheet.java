@@ -167,14 +167,15 @@ public class InvSheet {
             Sheet itemSheet = workbook.getSheetAt(0);
 
             int rowCount = itemSheet.getLastRowNum() - itemSheet.getFirstRowNum();
-
-            for (int i = 0; i < rowCount + 1; i++) {
+            System.out.println("| StoreName        || ProductID        || ProductName      || ProductPrice     || ProductQTY       |");
+            System.out.println("----------------------------------------------------------------------------------------------------");
+            for (int i = 1; i < rowCount + 1; i++) {
                 Row row = itemSheet.getRow(i);
                 for (int j = 1; j < row.getLastCellNum(); j++) {
-                objectList.add(row.getCell(j).getStringCellValue());
+               // objectList.add(row.getCell(j).getStringCellValue());
                     //Print Excel data in console
                     //System.out.print(row.getCell(j).getStringCellValue()+"|| ");
-                    System.out.printf("|| %-15s  ",row.getCell(j).getStringCellValue());
+                    System.out.printf("| %-15s  |",row.getCell(j).getStringCellValue());
                 }
                 //System.out.print(objectList);
                 System.out.println();

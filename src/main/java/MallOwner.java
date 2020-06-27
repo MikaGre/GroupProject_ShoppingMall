@@ -88,11 +88,8 @@ public class MallOwner {
         }
 
         public static void forceStoreClose () {
-            System.out.println("select the 'Store's ID to close store");
-            int  storeID = scanner.nextInt();
-            allStore.remove(storeID);
-            System.out.println("Store has been closed");
-
+        CreateAccount c = new CreateAccount();
+        c.deleteStore();
         }
 
         public static void getStoreList () {

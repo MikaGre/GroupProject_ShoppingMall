@@ -5,12 +5,13 @@ import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.openxmlformats.schemas.spreadsheetml.x2006.main.WorksheetDocument;
 
 import java.io.*;
 import java.util.*;
 
 public class CreateAccount {
-    //Scanner scanner = new Scanner(System.in);
+    Scanner scanner = new Scanner(System.in);
     Inventory accID;
     private XSSFSheet sheet;
     private final String filename = "Account Information.xlsx";
@@ -116,6 +117,30 @@ public class CreateAccount {
         listOfStores.forEach((k,v) -> System.out.println("\nStore Owner:" + k + " ==> Store Name:" + v));
     }
 
+    public void deleteStore () {
+        Map<Integer, String[]> store = new HashMap<>();
+        try {
+            FileInputStream file = new FileInputStream(filename);
+            XSSFWorkbook workbook = new XSSFWorkbook(file);
+            XSSFSheet sheet = workbook.getSheet("Items");
+            Sheet itemSheet = workbook.getSheetAt(0);
+
+            int rowCount = itemSheet.getLastRowNum() - itemSheet.getFirstRowNum();
+
+            for (int i = 1; i < rowCount + 1; i++) {
+                Row row = itemSheet.getRow(i);
+                for (int j = 1; j < row.getLastCellNum(); j++) {
+                    store.put(row.getRowNum(), new String[]{row.getCell(1).getStringCellValue(), row.getCell(2).getStringCellValue()});
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        store.forEach((k, v) -> System.out.println(Arrays.toString(v)));
+        System.out.println("Select Store to Force Close(Choose by Row Number)");
+        String forceClose = scanner.next();
+    }
+
     private void save() {
         try {
             FileOutputStream outStream = new FileOutputStream(filename);
@@ -126,6 +151,5 @@ public class CreateAccount {
             e.printStackTrace();
         }
     }
-
 
 }

@@ -56,7 +56,8 @@ public class MallOwner {
             System.out.println(Arrays.toString(StoreOwner.storeRequestList.get(names)));
         }
     }
-        public static void setStore () {
+
+    public static void setStore () {
             System.out.println("Choose owner to approve");
             String storeOwnerName = scanner.next();
             for (Integer k : StoreOwner.storeRequestList.keySet()) {
@@ -101,9 +102,9 @@ public class MallOwner {
         }
 
         public static void getInventory() {
-            System.out.println("Choose Store");
-
-        }
+        InvSheet i = new InvSheet();
+        i.getStoreListInv();
+    }
 
         public static void toLogout () {
             Menu m1 = new Menu();

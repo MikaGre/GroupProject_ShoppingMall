@@ -158,6 +158,34 @@ public class InvSheet {
         storeInv.forEach((k,v) -> System.out.println(Arrays.toString(v)));
     }
 
+    public void getStoreListInv () {
+        List<Object> objectList = new ArrayList<>();
+        try {
+            FileInputStream file = new FileInputStream(filename);
+            XSSFWorkbook workbook = new XSSFWorkbook(file);
+            XSSFSheet sheet = workbook.getSheet("Items");
+            Sheet itemSheet = workbook.getSheetAt(0);
+
+            int rowCount = itemSheet.getLastRowNum() - itemSheet.getFirstRowNum();
+
+            for (int i = 0; i < rowCount + 1; i++) {
+                Row row = itemSheet.getRow(i);
+                for (int j = 1; j < row.getLastCellNum(); j++) {
+                objectList.add(row.getCell(j).getStringCellValue());
+                    //Print Excel data in console
+                    //System.out.print(row.getCell(j).getStringCellValue()+"|| ");
+                    System.out.printf("|| %-15s  ",row.getCell(j).getStringCellValue());
+                }
+                //System.out.print(objectList);
+                System.out.println();
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     private void save () {
             try {
                 FileOutputStream outStream = new FileOutputStream(filename);

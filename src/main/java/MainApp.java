@@ -11,7 +11,8 @@ public class MainApp {
 //  Deli.inventory.addStoreItem();
 
 //Customer_class c1 = new Customer_class();
-Customer_class.enterStore();
+//Customer_class.enterStore();
+        MallOwner.getInventory();
 
 
 //        do {

@@ -89,7 +89,10 @@ public class MallOwner {
 
         public static void forceStoreClose () {
         CreateAccount c = new CreateAccount();
-        c.deleteStore();
+        c.storeList();
+        System.out.println("\nSelect Store to Force Close(Select Row#)");
+        int rowRemove = scanner.nextInt();
+        c.removeRow(rowRemove);
         }
 
         public static void getStoreList () {

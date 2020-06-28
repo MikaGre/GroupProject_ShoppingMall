@@ -1,3 +1,4 @@
+import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.xssf.usermodel.XSSFCell;
@@ -185,6 +186,28 @@ public class InvSheet {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public static void setQty(int rowNum,String qty) throws IOException {
+        final String filename = "Item Information.xlsx";
+        FileInputStream file = new FileInputStream(filename);
+        XSSFWorkbook workbook = new XSSFWorkbook(file);
+        XSSFSheet sheet = workbook.getSheet("Items");
+        Sheet itemSheet = workbook.getSheetAt(0);
+
+        Cell cell2Update = sheet.getRow(rowNum).getCell(5);
+        cell2Update.setCellValue(qty);
+
+        FileOutputStream outStream = new FileOutputStream(filename);
+        sheet.getWorkbook().write(outStream);
+        outStream.close();
+        sheet = new XSSFWorkbook(new FileInputStream(new File(filename))).getSheetAt(0);
+        try {
+            workbook = new XSSFWorkbook(file);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
     private void save () {

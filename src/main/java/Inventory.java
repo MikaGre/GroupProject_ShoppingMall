@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.text.NumberFormat;
 import java.util.*;
 
@@ -6,6 +7,8 @@ public class Inventory{
     static int productID = 0;
     static int ID = 0;
     static double price;
+    private static Scanner scanner;
+    private static InvSheet i;
     private int quantity;
     int id; // Being used for scanner class
     static String prouductName;
@@ -111,8 +114,7 @@ public class Inventory{
         }
     }
 
-    public void getStoreItems()
-    {
+    public void getStoreItems() {
         for (Integer k : storeInventory.keySet()) {
 
             Object[] itemsInfo = storeInventory.get(k);
@@ -121,6 +123,15 @@ public class Inventory{
             System.out.println("Qty: " + itemsInfo[2]);
         }
 
+    }
+
+    public static void setQuantity() throws IOException {
+        i.getStoreListInv();
+        System.out.print("Select Item row num:");
+        int row = scanner.nextInt();
+        System.out.print("Updated QTY amount:");
+        String setQTY = scanner.next();
+        i.setQty(row,setQTY);
     }
 
 }

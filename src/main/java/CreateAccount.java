@@ -1,6 +1,8 @@
 
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
+import org.apache.poi.openxml4j.opc.OPCPackage;
+import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -14,7 +16,7 @@ public class CreateAccount {
     Scanner scanner = new Scanner(System.in);
     Inventory accID;
     private XSSFSheet sheet;
-    private final String filename = "Account Information.xlsx";
+    private final String filename = "Store Information.xlsx";
 
 
     public CreateAccount () {
@@ -22,6 +24,9 @@ public class CreateAccount {
             FileInputStream file = new FileInputStream(new File(filename));
             XSSFWorkbook workbook = new XSSFWorkbook(file);
             sheet = workbook.getSheetAt(0);
+            file.close();
+            save();
+            workbook.close();
         } catch (FileNotFoundException e) {
             createSpreadsheet(); //file didn't exist yet
         } catch (IOException e) {
@@ -86,13 +91,14 @@ public class CreateAccount {
                 Menu menu = new Menu();
                 menu.mainMenu();
             }
+            save();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     public void storeList () {
-        Map<String,String> listOfStores = new HashMap<>();
+        Map<String, String> listOfStores = new HashMap<>();
         //List<String> storeInfo = new ArrayList<>();
         String name = null;
         String store = null;
@@ -104,70 +110,51 @@ public class CreateAccount {
             Sheet usersSheet = workbook.getSheetAt(0);
 
             int rowCount = usersSheet.getLastRowNum() - usersSheet.getFirstRowNum();
-
-            for (int i = 1; i < rowCount + 1; i++) {
-                Row row = usersSheet.getRow(i);
-                for (int j = 1; j < row.getLastCellNum(); j++) {
-                    listOfStores.put(row.getCell(1).getStringCellValue(),row.getCell(2).getStringCellValue());
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        listOfStores.forEach((k,v) -> System.out.println("\nStore Owner:" + k + " ==> Store Name:" + v));
-    }
-
-    public void deleteStore () {
-        //Map<Integer, String[]> store = new HashMap<>();
-        List<Object> store = new ArrayList<>();
-        try {
-            FileInputStream file = new FileInputStream(filename);
-            XSSFWorkbook workbook = new XSSFWorkbook(file);
-            XSSFSheet sheet = workbook.getSheet("Items");
-            Sheet itemSheet = workbook.getSheetAt(0);
-
-            int rowCount = itemSheet.getLastRowNum() - itemSheet.getFirstRowNum();
             System.out.println("||   RowNumber     || StoreOwnerName   || StoreName        |");
             System.out.println("-------------------------------------------------------------");
 
             for (int i = 1; i < rowCount + 1; i++) {
-                Row row = itemSheet.getRow(i);
+                Row row = usersSheet.getRow(i);
                 System.out.printf("| %-15s  |",row.getRowNum());
                 for (int j = 1; j < row.getLastCellNum(); j++) {
-                    //store.put(row.getRowNum(), new String[]{row.getCell(1).getStringCellValue(), row.getCell(2).getStringCellValue()});
-                    //store.add(row.getRowNum(), new String[]{row.getCell(1).getStringCellValue(), row.getCell(2).getStringCellValue()});
-                   //System.out.printf("| %-15s |\n" + store);
-
-                    System.out.printf("| %-15s  |",row.getCell(j).getStringCellValue());
-
+                    System.out.printf("| %-15s  |", row.getCell(j).getStringCellValue());
                 }
                 System.out.println();
             }
-
-            System.out.println("\nSelect Store to Force Close(Choose by Row Number)");
-            int forceClose = scanner.nextInt()+1;
-            XSSFRow removingRow = (XSSFRow) itemSheet.getRow(forceClose);
-            if(removingRow!=null){
-                itemSheet.removeRow(removingRow);
-            }
+            file.close();
+            save();
+            workbook.close();
 
         } catch (Exception e) {
             e.printStackTrace();
         }
-        //store.forEach((k, v) -> System.out.println(Arrays.toString(v)));
-
-
     }
 
-    private void save() {
+    public void removeRow(int rowIndex) {
+        storeList();
+        int lastRowNum=sheet.getLastRowNum();
+        if(rowIndex>=0&&rowIndex<lastRowNum){
+            sheet.shiftRows(rowIndex+1,lastRowNum, -1);
+        }
+        if(rowIndex==lastRowNum){
+            XSSFRow removingRow=sheet.getRow(rowIndex);
+            if(removingRow!=null){
+                sheet.removeRow(removingRow);
+            }
+        }
+        save();
+    }
+
+    private void save () {
         try {
             FileOutputStream outStream = new FileOutputStream(filename);
+            FileInputStream file = new FileInputStream(filename);
             sheet.getWorkbook().write(outStream);
             outStream.close();
+            file.close();
             sheet = new XSSFWorkbook(new FileInputStream(new File(filename))).getSheetAt(0);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-
 }

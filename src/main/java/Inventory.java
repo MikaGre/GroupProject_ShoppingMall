@@ -125,11 +125,20 @@ public class Inventory{
 
     }
 
-    public static void setQuantity() throws IOException {
+    public void setPrice() throws IOException {
         i.getStoreListInv();
         System.out.print("Select Item row num:");
         int row = scanner.nextInt();
-        System.out.print("Updated QTY amount:");
+        System.out.print("Updated Price amount:");
+        String setQTY = scanner.next();
+        i.setPrice(row,setQTY);
+    }
+
+    public void setQuantity () throws IOException {
+        i.getStoreListInv();
+        System.out.print("Select Item row num:");
+        int row = scanner.nextInt();
+        System.out.print("Updated Qty amount(Example:-10 or 20):");
         String setQTY = scanner.next();
         i.setQty(row,setQTY);
     }

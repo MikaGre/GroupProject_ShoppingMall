@@ -103,6 +103,7 @@ public class InvSheet {
                 Menu menu = new Menu();
                 menu.mainMenu();
             }
+            save();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -173,12 +174,8 @@ public class InvSheet {
             for (int i = 1; i < rowCount + 1; i++) {
                 Row row = itemSheet.getRow(i);
                 for (int j = 1; j < row.getLastCellNum(); j++) {
-               // objectList.add(row.getCell(j).getStringCellValue());
-                    //Print Excel data in console
-                    //System.out.print(row.getCell(j).getStringCellValue()+"|| ");
                     System.out.printf("| %-15s  |",row.getCell(j).getStringCellValue());
                 }
-                //System.out.print(objectList);
                 System.out.println();
             }
         } catch (FileNotFoundException e) {
@@ -188,22 +185,34 @@ public class InvSheet {
         }
     }
 
-    public static void setQty(int rowNum,String qty) throws IOException {
-        final String filename = "Item Information.xlsx";
+    public void setPrice(int rowNum,String qty) throws IOException {
+
+       try {
         FileInputStream file = new FileInputStream(filename);
         XSSFWorkbook workbook = new XSSFWorkbook(file);
-        XSSFSheet sheet = workbook.getSheet("Items");
         Sheet itemSheet = workbook.getSheetAt(0);
-
-        Cell cell2Update = sheet.getRow(rowNum).getCell(5);
+        Row row = sheet.getRow(rowNum);
+        Cell cell2Update = row.getCell(4);
         cell2Update.setCellValue(qty);
+        save();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-        FileOutputStream outStream = new FileOutputStream(filename);
-        sheet.getWorkbook().write(outStream);
-        outStream.close();
-        sheet = new XSSFWorkbook(new FileInputStream(new File(filename))).getSheetAt(0);
+    }
+
+    public void setQty(int rowNum,String qty) throws IOException {
+
         try {
-            workbook = new XSSFWorkbook(file);
+            FileInputStream file = new FileInputStream(filename);
+            XSSFWorkbook workbook = new XSSFWorkbook(file);
+            Sheet itemSheet = workbook.getSheetAt(0);
+            Row row = sheet.getRow(rowNum);
+            Cell cell2Update = row.getCell(5);
+            String currentQTY = cell2Update.getStringCellValue();
+            int qtyNum = Integer.parseInt(currentQTY) + Integer.parseInt(qty);
+            cell2Update.setCellValue(Integer.toString(qtyNum));
+            save();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -213,8 +222,10 @@ public class InvSheet {
     private void save () {
             try {
                 FileOutputStream outStream = new FileOutputStream(filename);
+                FileInputStream file = new FileInputStream(filename);
                 sheet.getWorkbook().write(outStream);
                 outStream.close();
+                file.close();
                 sheet = new XSSFWorkbook(new FileInputStream(new File(filename))).getSheetAt(0);
             } catch (Exception e) {
                 e.printStackTrace();

@@ -12,6 +12,7 @@ public class Order_class{
     static int priceOfTheItem;
     static double itemPrice, fSubTotal, fTotal, fTax;
     String productName = null;
+    InvSheet i = new InvSheet();
 
     Scanner scanner = new Scanner(System.in);
     //List<Object> cart = new ArrayList<>();

@@ -13,10 +13,10 @@ public class MallOwner {
     public MallOwner() {
         do {
             System.out.println("Please choose an option:" +
-                    "\n" + "|(1)to see new store request| |(2)to approve a new store request| " +
-                    "|(3)to send warning to store owner| |(4)to close a store| " +
+                    "\n" + "|(1)to see new store request| \n|(2)to approve a new store request| " +
+                    "\n|(3)to send warning to store owner| \n|(4)to close a store| " +
                     "\n|(5)to view current stores list| " +
-                    "|(6)to view inventory for a store| |(7)to logout|");
+                    "\n|(6)to view inventory for a store| \n|(7)to logout|");
             input = scanner.nextInt();
             if (input > 0 && input <= 7) {
                 switch (input) {
@@ -89,10 +89,9 @@ public class MallOwner {
 
         public static void forceStoreClose () {
         CreateAccount c = new CreateAccount();
-        c.storeList();
         System.out.println("\nSelect Store to Force Close(Select Row#)");
         int rowRemove = scanner.nextInt();
-        c.removeRow(rowRemove);
+        c.removeStore(rowRemove);
         }
 
         public static void getStoreList () {

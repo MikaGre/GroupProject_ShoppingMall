@@ -24,79 +24,29 @@ public class Menu {
 
     }
 
-   /* public void loginMenu() {
-        System.out.println("Who are you? \n(A)Customer \n(B)Store Owner \n(C)Mall Owner");
-        String menuSelect = scanner.next().toLowerCase();
-        System.out.print("UserID: ");
-        userID = scanner.nextInt();
-        System.out.print("Password: ");
-        String password = scanner.next();
-        boolean isCorrectLogin = createAccount.verfiyAccount(Integer.toString(userID),password);
-
-        if (isCorrectLogin = true) {
-            switch (menuSelect) {
-                case "a":
-                    customerMenu();
-                case "b":
-                    storeOwnerMenu();
-                case "c":
-                    mallOwnerMenu();
-
-            }
-        }
-    }*/
-
-  /*   public void createAccountMenu() {
-        Scanner scanner = new Scanner(System.in);
-        System.out.print("Enter a UserName: ");
-        String userName = scanner.next();
-        System.out.println("Who are you? \n(A)Customer \n(B)Store Owner \n(C)Mall Owner");
-        String menuSelect = scanner.next().toLowerCase();
-        String accType = "";
-
-        switch (menuSelect){
-            case "a":
-                accType = "Customer";
-                break;
-            case "b":
-                accType = "StoreOwner";
-                break;
-            case "c":
-                accType = "MallOwner";
-                break;
-            default:
-                System.out.println( menuSelect + " is not an account type!");
-                createAccountMenu();
-                break;
-
-        }
-        System.out.print("Enter a password: ");
-        String password = scanner.next();
-
-        CreateAccount createAccount = new CreateAccount();
-        createAccount.addAccount(accType,userName,password);
-        System.out.println("***Account has been created***");
-        mainMenu();
-    }*/
-
     public void customerMenu() {
+        Order_class orderClass = new Order_class();
         System.out.println("Hello. Choose action: \n(A)Visit Store \n(B)View Shopping Cart  \n(D)Edit account details \n(P)Payment  \n(Q)Logout");
         String menuSelect = scanner.next().toLowerCase();
 
         switch (menuSelect){
             case "a":
                 MallOwner.getStoreList();
+                customerMenu();
                 break;
             case "b":
-               // Order_class.order();
+                orderClass.order();
+                customerMenu();
             case "q":
                 mainMenu();
                 break;
             case "p":
                 Order_class.payment();
+                customerMenu();
                 break;
             case "d":
                 Customer_class.accountDetails();
+                customerMenu();
                 break;
             default:
                 System.out.println( menuSelect + " is not an action!");
@@ -112,6 +62,8 @@ public class Menu {
 
     public void storeOwnerMenu() {
         Inventory inventory=new Inventory();
+        InvSheet i = new InvSheet();
+        CreateAccount c = new CreateAccount();
         for (Integer storeID :MallOwner.storeOwnerWarnings.keySet()) {
             if (storeID == userID ) {
                 System.out.println(MallOwner.storeOwnerWarnings.get(storeID));
@@ -133,13 +85,17 @@ public class Menu {
                   switch (input){
                       case "a":
                           inventory.searchItem();
+                          storeOwnerMenu();
                           break;
                       case "b":
-                         inventory.getStoreItems();
+                          System.out.println("Enter your store name:");
+                          String store = scanner.next();
+                         c.verfiyStore(store);
+                         storeOwnerMenu();
                          break;
                       case "c":
-
                           inventory.addStoreItem();
+                          storeOwnerMenu();
                           break;
                       default:
                           System.out.println( menuSelect + " is not an action!");
@@ -147,6 +103,8 @@ public class Menu {
                   }
                 break;
             case "c":
+                MallOwner.forceStoreClose();
+                mainMenu();
             case "q":
                 mainMenu();
                 break;

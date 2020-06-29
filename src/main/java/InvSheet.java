@@ -161,7 +161,6 @@ public class InvSheet {
     }
 
     public void getStoreListInv () {
-        List<Object> objectList = new ArrayList<>();
         try {
             FileInputStream file = new FileInputStream(filename);
             XSSFWorkbook workbook = new XSSFWorkbook(file);
@@ -169,17 +168,16 @@ public class InvSheet {
             Sheet itemSheet = workbook.getSheetAt(0);
 
             int rowCount = itemSheet.getLastRowNum() - itemSheet.getFirstRowNum();
-            System.out.println("| StoreName        || ProductID        || ProductName      || ProductPrice     || ProductQTY       |");
-            System.out.println("----------------------------------------------------------------------------------------------------");
+            System.out.println("||   RowNumber     || StoreName        || ProductID        || ProductName      || ProductPrice     || ProductQTY       |");
+            System.out.println("------------------------------------------------------------------------------------------------------------------------");
             for (int i = 1; i < rowCount + 1; i++) {
                 Row row = itemSheet.getRow(i);
+                System.out.printf("| %-15s  |",row.getRowNum());
                 for (int j = 1; j < row.getLastCellNum(); j++) {
                     System.out.printf("| %-15s  |",row.getCell(j).getStringCellValue());
                 }
                 System.out.println();
             }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -217,6 +215,21 @@ public class InvSheet {
             e.printStackTrace();
         }
 
+    }
+
+    public void removeItem(int rowIndex) {
+        getStoreListInv();
+        int lastRowNum=sheet.getLastRowNum();
+        if(rowIndex>=0&&rowIndex<lastRowNum){
+            sheet.shiftRows(rowIndex+1,lastRowNum, -1);
+        }
+        if(rowIndex==lastRowNum){
+            XSSFRow removingRow=sheet.getRow(rowIndex);
+            if(removingRow!=null){
+                sheet.removeRow(removingRow);
+            }
+        }
+        save();
     }
 
     private void save () {

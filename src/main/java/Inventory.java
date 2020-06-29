@@ -7,8 +7,8 @@ public class Inventory{
     static int productID = 0;
     static int ID = 0;
     static double price;
-    private static Scanner scanner;
-    private static InvSheet i;
+    static Scanner scanner;
+    static InvSheet i;
     private int quantity;
     int id; // Being used for scanner class
     static String prouductName;
@@ -135,12 +135,14 @@ public class Inventory{
     }
 
     public void setQuantity () throws IOException {
-        i.getStoreListInv();
-        System.out.print("Select Item row num:");
-        int row = scanner.nextInt();
-        System.out.print("Updated Qty amount(Example:-10 or 20):");
-        String setQTY = scanner.next();
-        i.setQty(row,setQTY);
+       InvSheet invSheet = new InvSheet();
+       Scanner s = new Scanner(System.in);
+        invSheet.getStoreListInv();
+        System.out.print("Select Item by row num:");
+        int row = s.nextInt();
+        System.out.print("Add or Subtract Qty (Example:-10 or 20):");
+        String setQTY = s.next();
+        invSheet.setQty(row,setQTY);
     }
 
 }

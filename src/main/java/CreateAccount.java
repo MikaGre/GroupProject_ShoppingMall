@@ -130,8 +130,9 @@ public class CreateAccount {
         }
     }
 
-    public void removeRow(int rowIndex) {
+    public void removeStore(int rowIndex) {
         storeList();
+        InvSheet i = new InvSheet();
         int lastRowNum=sheet.getLastRowNum();
         if(rowIndex>=0&&rowIndex<lastRowNum){
             sheet.shiftRows(rowIndex+1,lastRowNum, -1);

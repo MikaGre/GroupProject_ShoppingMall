@@ -1,16 +1,15 @@
 
 
-import java.sql.SQLOutput;
+import java.io.IOException;
 import java.util.*;
 
 public class MallOwner {
     static Scanner scanner = new Scanner(System.in);
     static int input;
-    //static List<Integer> storeOwnerList = new ArrayList<>();
     public static Map<String, Integer[]> allStore = new HashMap<>();
     public static Map<Integer,String> storeOwnerWarnings = new HashMap<>();
 
-    public MallOwner() {
+    public MallOwner() throws IOException {
         do {
             System.out.println("Please choose an option:" +
                     "\n" + "|(1)to see new store request| \n|(2)to approve a new store request| " +
@@ -92,6 +91,7 @@ public class MallOwner {
         System.out.println("\nSelect Store to Force Close(Select Row#)");
         int rowRemove = scanner.nextInt();
         c.removeStore(rowRemove);
+
         }
 
         public static void getStoreList () {
@@ -102,10 +102,10 @@ public class MallOwner {
 
         public static void getInventory() {
         InvSheet i = new InvSheet();
-        i.getStoreListInv();
+        i.getAllStoreListInv();
     }
 
-        public static void toLogout () {
+        public static void toLogout () throws IOException {
             Menu m1 = new Menu();
             System.out.println("going back to login part");
             m1.mainMenu();

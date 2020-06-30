@@ -1,13 +1,10 @@
 
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
-import org.apache.poi.openxml4j.opc.OPCPackage;
-import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.openxmlformats.schemas.spreadsheetml.x2006.main.WorksheetDocument;
 
 import java.io.*;
 import java.util.*;
@@ -24,9 +21,6 @@ public class CreateAccount {
             FileInputStream file = new FileInputStream(new File(filename));
             XSSFWorkbook workbook = new XSSFWorkbook(file);
             sheet = workbook.getSheetAt(0);
-            file.close();
-            save();
-            workbook.close();
         } catch (FileNotFoundException e) {
             createSpreadsheet(); //file didn't exist yet
         } catch (IOException e) {
@@ -98,11 +92,6 @@ public class CreateAccount {
     }
 
     public void storeList () {
-        Map<String, String> listOfStores = new HashMap<>();
-        //List<String> storeInfo = new ArrayList<>();
-        String name = null;
-        String store = null;
-
         try {
             FileInputStream file = new FileInputStream(filename);
             XSSFWorkbook workbook = new XSSFWorkbook(file);
@@ -110,8 +99,8 @@ public class CreateAccount {
             Sheet usersSheet = workbook.getSheetAt(0);
 
             int rowCount = usersSheet.getLastRowNum() - usersSheet.getFirstRowNum();
-            System.out.println("||   RowNumber     || StoreOwnerName   || StoreName        |");
-            System.out.println("-------------------------------------------------------------");
+            System.out.println("|    Row Number   ||    Store Owner   ||    Store Name    |");
+            System.out.println("------------------------------------------------------------");
 
             for (int i = 1; i < rowCount + 1; i++) {
                 Row row = usersSheet.getRow(i);
@@ -121,9 +110,9 @@ public class CreateAccount {
                 }
                 System.out.println();
             }
-            file.close();
+
             save();
-            workbook.close();
+
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -132,7 +121,6 @@ public class CreateAccount {
 
     public void removeStore(int rowIndex) {
         storeList();
-        InvSheet i = new InvSheet();
         int lastRowNum=sheet.getLastRowNum();
         if(rowIndex>=0&&rowIndex<lastRowNum){
             sheet.shiftRows(rowIndex+1,lastRowNum, -1);
@@ -158,4 +146,5 @@ public class CreateAccount {
             e.printStackTrace();
         }
     }
+
 }

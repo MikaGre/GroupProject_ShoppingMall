@@ -1,5 +1,4 @@
 import java.io.IOException;
-import java.text.NumberFormat;
 import java.util.*;
 
 public class Inventory{
@@ -7,8 +6,10 @@ public class Inventory{
     static int productID = 0;
     static int ID = 0;
     static double price;
+
     static Scanner scanner;
     static InvSheet i;
+
     private int quantity;
     int id; // Being used for scanner class
     static String prouductName;
@@ -114,7 +115,8 @@ public class Inventory{
         }
     }
 
-    public void getStoreItems() {
+    public void getStoreItems()
+    {
         for (Integer k : storeInventory.keySet()) {
 
             Object[] itemsInfo = storeInventory.get(k);
@@ -126,7 +128,9 @@ public class Inventory{
     }
 
     public void setPrice() throws IOException {
-        i.getStoreListInv();
+        InvSheet i = new InvSheet();
+        Scanner scanner = new Scanner(System.in);
+        i.getAllStoreListInv();
         System.out.print("Select Item row num:");
         int row = scanner.nextInt();
         System.out.print("Updated Price amount:");
@@ -137,7 +141,7 @@ public class Inventory{
     public void setQuantity () throws IOException {
        InvSheet invSheet = new InvSheet();
        Scanner s = new Scanner(System.in);
-        invSheet.getStoreListInv();
+        invSheet.getAllStoreListInv();
         System.out.print("Select Item by row num:");
         int row = s.nextInt();
         System.out.print("Add or Subtract Qty (Example:-10 or 20):");

@@ -5,8 +5,6 @@ public class StoreOwner {
     static int storeID=1;
     static String storeOwnerName;
     static String storeName;
-    int price;
-    double sellingPrice;
     Inventory inventory;
     InvSheet invSheet;
     Scanner S1 = new Scanner(System.in);
@@ -27,7 +25,8 @@ public class StoreOwner {
         invSheet = new InvSheet();
     }
 
-    public void sendStoreRequest() {
+    public static void sendStoreRequest() {
+        Scanner S1 = new Scanner(System.in);
         ++storeID;
         System.out.println("Youre Name");
         String storeOwnerName = S1.next();

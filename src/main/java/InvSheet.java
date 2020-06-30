@@ -10,7 +10,6 @@ import java.io.*;
 import java.util.*;
 
 public class InvSheet {
-
     //Scanner scanner = new Scanner(System.in);
     Inventory accID;
     private XSSFSheet sheet;
@@ -130,14 +129,78 @@ public class InvSheet {
         }catch (Exception e) {
             e.printStackTrace();
         }
+    }
 
-        storeInfo.forEach((k,v) -> System.out.println(k + " ==> " + Arrays.toString(v)));
+    public double getItemPrice (String item) {
+        Map<Integer,String[]> storeInv = new HashMap<>();
+        double itemPrice = 0;
+
+        try {
+            FileInputStream file = new FileInputStream(filename);
+            XSSFWorkbook workbook = new XSSFWorkbook(file);
+            XSSFSheet sheet = workbook.getSheet("Items");
+            Sheet itemSheet = workbook.getSheetAt(0);
+
+            int rowCount = itemSheet.getLastRowNum() - itemSheet.getFirstRowNum();
+
+            for (int i = 1; i < rowCount + 1; i++) {
+                Row row = itemSheet.getRow(i);
+                for (int j = 1; j < row.getLastCellNum(); j++) {
+                    if (row.getCell(j).getStringCellValue().equalsIgnoreCase(item)){
+                        itemPrice = Double.parseDouble(row.getCell(4).getStringCellValue());
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return itemPrice;
+    }
+
+    public int getItemQTY (String item,Double buyerQty) {
+        Map<Integer,String[]> storeInv = new HashMap<>();
+        int iRowQty = Integer.MIN_VALUE;
+        try {
+            FileInputStream file = new FileInputStream(filename);
+            XSSFWorkbook workbook = new XSSFWorkbook(file);
+            XSSFSheet sheet = workbook.getSheet("Items");
+            Sheet itemSheet = workbook.getSheetAt(0);
+
+            int rowCount = itemSheet.getLastRowNum() - itemSheet.getFirstRowNum();
+            for (int i = 1; i < rowCount + 1; i++) {
+                Row row = itemSheet.getRow(i);
+                for (int j = 1; j < row.getLastCellNum(); j++) {
+                    if (row.getCell(j).getStringCellValue().equalsIgnoreCase(item)){
+                        iRowQty = row.getRowNum();
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return iRowQty;
+    }
+
+    public void buyingSubtractQty(int rowNum,String qty) {
+
+        try {
+            FileInputStream file = new FileInputStream(filename);
+            XSSFWorkbook workbook = new XSSFWorkbook(file);
+            Sheet itemSheet = workbook.getSheetAt(0);
+            Row row = sheet.getRow(rowNum);
+            Cell cell2Update = row.getCell(5);
+            String currentQTY = cell2Update.getStringCellValue();
+            int qtyNum = Integer.parseInt(currentQTY) - Integer.parseInt(qty);
+            cell2Update.setCellValue(Integer.toString(qtyNum));
+            save();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
     public void enterStore(String store) {
         Map<Integer,String[]> storeInv = new HashMap<>();
-        String sNAME = null;
-
         try {
             FileInputStream file = new FileInputStream(filename);
             XSSFWorkbook workbook = new XSSFWorkbook(file);
@@ -160,7 +223,31 @@ public class InvSheet {
         storeInv.forEach((k,v) -> System.out.println(Arrays.toString(v)));
     }
 
-    public void getStoreListInv () {
+    public void StoreOwnerINV(String store) {
+        Map<Integer,String[]> storeInv = new HashMap<>();
+        try {
+            FileInputStream file = new FileInputStream(filename);
+            XSSFWorkbook workbook = new XSSFWorkbook(file);
+            XSSFSheet sheet = workbook.getSheet("Items");
+            Sheet itemSheet = workbook.getSheetAt(0);
+
+            int rowCount = itemSheet.getLastRowNum() - itemSheet.getFirstRowNum();
+
+            for (int i = 1; i < rowCount + 1; i++) {
+                Row row = itemSheet.getRow(i);
+                for (int j = 1; j < row.getLastCellNum(); j++) {
+                    if (row.getCell(j).getStringCellValue().equalsIgnoreCase(store)){
+                        storeInv.put(row.getRowNum(),new String[]{row.getCell(3).getStringCellValue(),"$"+row.getCell(4).getStringCellValue(),"QTY:"+row.getCell(5).getStringCellValue()});
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        storeInv.forEach((k,v) -> System.out.println(Arrays.toString(v)));
+    }
+
+    public void getAllStoreListInv () {
         try {
             FileInputStream file = new FileInputStream(filename);
             XSSFWorkbook workbook = new XSSFWorkbook(file);
@@ -218,7 +305,7 @@ public class InvSheet {
     }
 
     public void removeItem(int rowIndex) {
-        getStoreListInv();
+        getAllStoreListInv();
         int lastRowNum=sheet.getLastRowNum();
         if(rowIndex>=0&&rowIndex<lastRowNum){
             sheet.shiftRows(rowIndex+1,lastRowNum, -1);
@@ -246,5 +333,3 @@ public class InvSheet {
         }
 
 }
-
-

@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
@@ -41,7 +42,7 @@ public static void leaveStore(){
 
 
 }
-public static void enterStore(){
+public static void enterStore() throws IOException {
     CreateAccount ca = new CreateAccount();
     MallOwner.getStoreList();
     Scanner scanner = new Scanner(System.in);

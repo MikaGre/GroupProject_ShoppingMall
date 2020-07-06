@@ -8,8 +8,6 @@ public class Menu {
     CreateAccount createAccount = new CreateAccount();
     Inventory inventory = new Inventory();
     InvSheet i = new InvSheet();
-    public int userID = -1;
-
 
     public void mainMenu() throws IOException {
         System.out.println("Welcome! Choose Menu \n(A)Customer \n(B)Store Owner \n(C)Mall Owner");
@@ -56,12 +54,17 @@ public class Menu {
     }
 
     public void storeOwnerMenu() throws IOException {
-        Inventory inventory=new Inventory();
+        Inventory inventory = new Inventory();
         InvSheet i = new InvSheet();
+
+        System.out.println("What is the name of your store?");
+        String sName = scanner.next();
+
         CreateAccount c = new CreateAccount();
-        for (Integer storeID :MallOwner.storeOwnerWarnings.keySet()) {
-            if (storeID == userID ) {
-                System.out.println(MallOwner.storeOwnerWarnings.get(storeID));
+        for (String storeName :MallOwner.storeOwnerWarnings.keySet()) {
+            if (storeName.equalsIgnoreCase(sName) ) {
+                System.out.println("This is a warning from the Mall Owner for " + sName + ":");
+                System.out.println(MallOwner.storeOwnerWarnings.get(storeName));
             }
         }
 

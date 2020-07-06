@@ -6,10 +6,12 @@ import java.util.*;
 public class MallOwner {
     static Scanner scanner = new Scanner(System.in);
     static int input;
+
     public static Map<String, Integer[]> allStore = new HashMap<>();
-    public static Map<Integer,String> storeOwnerWarnings = new HashMap<>();
+    public static Map<String,String> storeOwnerWarnings = new HashMap<>();
 
     public MallOwner() throws IOException {
+        Menu m = new Menu();
         do {
             System.out.println("Please choose an option:" +
                     "\n" + "|(1)to see new store request| \n|(2)to approve a new store request| " +
@@ -21,21 +23,27 @@ public class MallOwner {
                 switch (input) {
                     case 1:
                         getStoreRequest();
+                        m.mallOwnerMenu();
                         break;
                     case 2:
                         setStore();
+                        m.mallOwnerMenu();
                         break;
                     case 3:
                         sendWarning();
+                        m.mallOwnerMenu();
                         break;
                     case 4:
                         forceStoreClose();
+                        m.mallOwnerMenu();
                         break;
                     case 5:
                         getStoreList();
+                        m.mallOwnerMenu();
                         break;
                     case 6:
                         getInventory();
+                        m.mallOwnerMenu();
                         break;
                     case 7:
                         toLogout();
@@ -59,6 +67,8 @@ public class MallOwner {
     public static void setStore () {
             System.out.println("Choose owner to approve");
             String storeOwnerName = scanner.next();
+            System.out.println("Name of Store Owner's Store");
+            String storeName = scanner.next();
             for (Integer k : StoreOwner.storeRequestList.keySet()) {
                 if (StoreOwner.storeRequestList.get(k)[0].contains(storeOwnerName)) {
                     String approveStore;
@@ -68,6 +78,8 @@ public class MallOwner {
                         StoreOwner.storeID++;
                         allStore.put(StoreOwner.storeOwnerName, new Integer[]{StoreOwner.storeID});
                         System.out.println("Approved new store for " + StoreOwner.storeOwnerName + " with the Id : " + StoreOwner.storeID);
+                        CreateAccount c = new CreateAccount();
+                        c.addAccount("Store Owner",storeOwnerName,storeName);
                     } else if (approveStore.equalsIgnoreCase("no")) {
                         System.out.println("Request for new store by " + StoreOwner.storeOwnerName + " is rejected");
 
@@ -80,10 +92,10 @@ public class MallOwner {
 
         public static void sendWarning () {
             System.out.println("Enter Store Name");
-            int storeID = scanner.nextInt();
+            String storeName = scanner.next();
             System.out.println("Enter warning message");
             String message = scanner.next();
-            storeOwnerWarnings.put(storeID,message);
+            storeOwnerWarnings.put(storeName,message);
         }
 
         public static void forceStoreClose () {

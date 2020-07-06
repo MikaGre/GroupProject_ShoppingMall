@@ -66,6 +66,19 @@ public class Order_class {
                     System.out.println("****Item removed from cart****");
                     iqty = invSheet.getItemQTY(productName,quantity);
                     invSheet.setQty(iqty, String.valueOf(quantity));
+                    System.out.print("Continue shopping (y/n) ==> Would you like to remove an item(r)? ");
+                    String s = scanner.next().toLowerCase();
+                            switch (s){
+                                case "y":
+                                    break;
+                                case "n":
+                                    keepShopping = false;
+                                    break;
+                                default:
+                                    System.out.println(s + " <= That is not an option");
+                                    order();
+                            }
+
                     break;
                 default:
                     System.out.println(shop + " <= That is not an option");

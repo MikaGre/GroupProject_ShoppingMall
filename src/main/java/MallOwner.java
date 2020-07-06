@@ -107,7 +107,6 @@ public class MallOwner {
         }
 
         public static void getStoreList () {
-            //allStore.forEach((k,v)-> System.out.println(k + Arrays.toString(v)));
             CreateAccount c = new CreateAccount();
             c.storeList();
         }

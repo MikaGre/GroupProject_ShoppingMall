@@ -1,6 +1,4 @@
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 public class Menu {
@@ -8,6 +6,7 @@ public class Menu {
     CreateAccount createAccount = new CreateAccount();
     Inventory inventory = new Inventory();
     InvSheet i = new InvSheet();
+    String sName = null;
 
     public void mainMenu() throws IOException {
         System.out.println("Welcome! Choose Menu \n(A)Customer \n(B)Store Owner \n(C)Mall Owner");
@@ -16,7 +15,10 @@ public class Menu {
         switch (menuSelect){
             case "a":
                 customerMenu();
+
             case "b":
+                System.out.println("What is the name of your store?");
+                sName = scanner.next();
                 storeOwnerMenu();
             case "c":
                 mallOwnerMenu();
@@ -26,7 +28,7 @@ public class Menu {
 
     public void customerMenu() throws IOException {
         Order_class orderClass = new Order_class();
-        System.out.println("Hello. Choose action: \n(A)Visit Store \n(D)Edit account details \n(Q)Logout");
+        System.out.println("Hello. Choose action: \n(A)Visit Store  \n(Q)Logout");
         String menuSelect = scanner.next().toLowerCase();
 
         switch (menuSelect){
@@ -36,10 +38,6 @@ public class Menu {
                 break;
             case "q":
                 mainMenu();
-                break;
-            case "d":
-                Customer_class.accountDetails();
-                customerMenu();
                 break;
             default:
                 System.out.println( menuSelect + " is not an action!");
@@ -56,11 +54,8 @@ public class Menu {
     public void storeOwnerMenu() throws IOException {
         Inventory inventory = new Inventory();
         InvSheet i = new InvSheet();
-
-        System.out.println("What is the name of your store?");
-        String sName = scanner.next();
-
         CreateAccount c = new CreateAccount();
+
         for (String storeName :MallOwner.storeOwnerWarnings.keySet()) {
             if (storeName.equalsIgnoreCase(sName) ) {
                 System.out.println("This is a warning from the Mall Owner for " + sName + ":");
@@ -78,7 +73,7 @@ public class Menu {
                StoreOwner.sendStoreRequest();
                 break;
             case "b":
-                System.out.println("(A)Search Items  \n(B)Get list of Items \n(C)Add Items \n(D)Set Item Price \n(E)Set Item Qty");
+                System.out.println("(A)Search Items  \n(B)Get list of Items \n(C)Add Items \n(D)Set Item Price \n(E)Set Item Qty \n(S)Discount Item");
                 String input = scanner.next().toLowerCase();
                   switch (input){
                       case "a":
@@ -86,9 +81,7 @@ public class Menu {
                           storeOwnerMenu();
                           break;
                       case "b":
-                          System.out.println("Enter your store name:");
-                          String store = scanner.next();
-                         i.StoreOwnerINV(store);
+                         i.StoreOwnerINV(sName);
                          storeOwnerMenu();
                          break;
                       case "c":
@@ -101,6 +94,14 @@ public class Menu {
                           break;
                       case "e":
                           inventory.setQuantity();
+                          storeOwnerMenu();
+                          break;
+                      case "s":
+                          i.getAllStoreListInv();
+                          System.out.println("Choose item to put on sale (Row Number): ");
+                          int row = scanner.nextInt();
+                          i.setSalePrice(row);
+                          i.getAllStoreListInv();
                           storeOwnerMenu();
                           break;
                       default:

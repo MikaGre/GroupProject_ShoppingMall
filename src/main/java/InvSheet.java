@@ -10,7 +10,6 @@ import java.io.*;
 import java.util.*;
 
 public class InvSheet {
-    //Scanner scanner = new Scanner(System.in);
     Inventory accID;
     private XSSFSheet sheet;
     private final String filename = "Item Information.xlsx";
@@ -181,7 +180,7 @@ public class InvSheet {
         return iRowQty;
     }
 
-    public void buyingSubtractQty(int rowNum,String qty) {
+/*   // public void buyingSubtractQty(int rowNum,String qty) {
 
         try {
             FileInputStream file = new FileInputStream(filename);
@@ -190,14 +189,14 @@ public class InvSheet {
             Row row = sheet.getRow(rowNum);
             Cell cell2Update = row.getCell(5);
             String currentQTY = cell2Update.getStringCellValue();
-            int qtyNum = Integer.parseInt(currentQTY) - Integer.parseInt(qty);
+            int qtyNum = Integer.parseInt(currentQTY) + (-1*(Integer.parseInt(qty)));
             cell2Update.setCellValue(Integer.toString(qtyNum));
             save();
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-    }
+    }*/
 
     public void enterStore(String store) {
         Map<Integer,String[]> storeInv = new HashMap<>();
@@ -270,7 +269,7 @@ public class InvSheet {
         }
     }
 
-    public void setPrice(int rowNum,String qty) throws IOException {
+    public void setPrice(int rowNum,String price) throws IOException {
 
        try {
         FileInputStream file = new FileInputStream(filename);
@@ -278,8 +277,28 @@ public class InvSheet {
         Sheet itemSheet = workbook.getSheetAt(0);
         Row row = sheet.getRow(rowNum);
         Cell cell2Update = row.getCell(4);
-        cell2Update.setCellValue(qty);
+        cell2Update.setCellValue(price);
         save();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public void setSalePrice(int rowNum) throws IOException {
+
+        try {
+            FileInputStream file = new FileInputStream(filename);
+            XSSFWorkbook workbook = new XSSFWorkbook(file);
+            Sheet itemSheet = workbook.getSheetAt(0);
+            Row row = sheet.getRow(rowNum);
+            Cell cell2Update = row.getCell(4);
+            Cell cellName = row.getCell(3);
+            double iprice = Double.parseDouble(cell2Update.getStringCellValue());
+            double salePrice = (int) iprice - (5.0/100.0);
+            cell2Update.setCellValue(String.valueOf(salePrice));
+            cellName.setCellValue(cellName.getStringCellValue() + " *SALE*");
+            save();
         } catch (IOException e) {
             e.printStackTrace();
         }

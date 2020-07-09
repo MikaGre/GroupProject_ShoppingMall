@@ -11,7 +11,7 @@ public class Order_class {
     InvSheet i = new InvSheet();
 
     Scanner scanner = new Scanner(System.in);
-    Map<String, Double[]> cart = new HashMap<>();
+    static Map<String, Double[]> cart = new HashMap<>();
     boolean keepShopping = true;
 
     public void order () throws IOException {
@@ -26,32 +26,30 @@ public class Order_class {
             System.out.print("Enter the quantity: ");
             String q = scanner.next();
             quantity = Double.parseDouble(q);
-            int iqty = invSheet.getItemQTY(productName,quantity);
-            invSheet.buyingSubtractQty(iqty,q);
             cart.put(productName, new Double[]{quantity, itemPrice});
 
-            System.out.println("==================== Your Cart ==================");
-            System.out.println("Item    \t\tPrice\t   Quantity\t   Item Total");
-            System.out.println("***************************************************");
+            System.out.println("==================== Your Cart ================================");
+            System.out.println("Item\t    \t\tPrice\t\t\t   Quantity\t\t   Item Total");
+            System.out.println("****************************************************************");
 
             fSubTotal = 0;
 
             for (String k : cart.keySet()) {
                 Double[] itemsInfo = cart.get(k);
-                System.out.println(String.format("%-15s      $%-15.2f      %.1f\t\t   $%.2f", k, itemsInfo[1], itemsInfo[0], itemsInfo[1] * itemsInfo[0]));
+                System.out.println(String.format("%-15s      $%-15.2f    %.1f\t\t   $%.2f", k, itemsInfo[1], itemsInfo[0], itemsInfo[1] * itemsInfo[0]));
                 fSubTotal += itemsInfo[1] * itemsInfo[0];
             }
 
             fTax = fSubTotal * 0.09;
             fTotal = fSubTotal + fTax;
 
-            System.out.println("***************************************************");
-            System.out.println(String.format("Subtotal\t\t\t\t\t\t       $%.2f", fSubTotal));
-            System.out.println(String.format("Tax\t\t\t\t\t\t\t\t       $%.2f", fTax));
-            System.out.println(String.format("Total\t\t\t\t\t\t\t       $%.2f", fTotal));
-            System.out.println("==============================================");
+            System.out.println("****************************************************************");
+            System.out.println(String.format("Subtotal\t\t\t\t\t\t\t\t               $%.2f", fSubTotal));
+            System.out.println(String.format("Tax\t\t\t\t\t\t\t\t\t\t               $%.2f", fTax));
+            System.out.println(String.format("Total\t\t\t\t\t\t\t\t\t               $%.2f", fTotal));
+            System.out.println("================================================================");
 
-            System.out.print("Continue shopping (y/n) ==> Would you like to remove an item(r)? ");
+            System.out.println("Continue shopping (y/n) \nWould you like to remove an item(r)? \nPress Q to leave store ");
             String shop = scanner.next().toLowerCase();
 
             switch (shop) {
@@ -60,13 +58,14 @@ public class Order_class {
                 case "n":
                     keepShopping = false;
                     break;
+                case "q":
+                    Customer_class.leaveStore();
+                    break;
                 case "r":
                     System.out.println("Provide item name:");
                     removeItem(scanner.next());
                     System.out.println("****Item removed from cart****");
-                    iqty = invSheet.getItemQTY(productName,quantity);
-                    invSheet.setQty(iqty, String.valueOf(quantity));
-                    System.out.print("Continue shopping (y/n) ==> Would you like to remove an item(r)? ");
+                    System.out.println("Continue shopping (y/n) \nWould you like to remove an item(r)? \nPress Q to leave store ");
                     String s = scanner.next().toLowerCase();
                             switch (s){
                                 case "y":
@@ -74,9 +73,13 @@ public class Order_class {
                                 case "n":
                                     keepShopping = false;
                                     break;
+                                case "q":
+                                    Customer_class.leaveStore();
+                                    break;
                                 default:
                                     System.out.println(s + " <= That is not an option");
                                     order();
+                                    break;
                             }
 
                     break;
@@ -90,10 +93,13 @@ public class Order_class {
     }
 
     public void removeItem(String productName) {
+        System.out.println("==================== Your Cart ================================");
+        System.out.println("Item\t    \t\tPrice\t\t\t   Quantity\t\t   Item Total");
+        System.out.println("****************************************************************");
         cart.remove(productName);
         for (String k : cart.keySet()) {
             Double[] itemsInfo = cart.get(k);
-            System.out.println(String.format("%s\t\t      $%.2f      %.1f\t\t   $%.2f", k, itemsInfo[1], itemsInfo[0], itemsInfo[1] * itemsInfo[0]));
+            System.out.println(String.format("%-15s\t      $%-15.2f        %.1f\t\t   $%.2f", k, itemsInfo[1], itemsInfo[0], itemsInfo[1] * itemsInfo[0]));
             fSubTotal += itemsInfo[1] * itemsInfo[0];
         }
 
@@ -118,7 +124,7 @@ public class Order_class {
 
         switch (payment) {
             case "a":
-                System.out.println("Enter the credit card number");
+                System.out.println("Enter your 16 digit credit card number");
                 String creditNum = input.next();
                 if (!creditNum.matches("\\d{16}")) {
                     System.out.println(creditNum + " <= Invalid card number");
@@ -133,7 +139,7 @@ public class Order_class {
                         System.out.println("enter expiration date (Format: XX/XX)");
                         String expDate = input.next();
                         if (!expDate.matches("\\d{2}/\\d{2}")) {
-                            System.out.println(expDate + " <= Invalid expiration date");
+                            System.out.println(expDate + " <= Invalid expiration date (Format: XX/XX) ");
                             payment();
                         } else {
                             double creditTotal = fTotal + fTotal / 100 * 3;

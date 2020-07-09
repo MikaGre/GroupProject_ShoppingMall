@@ -18,7 +18,6 @@ public class StoreOwner {
         this.storeOwnerName = S1.next();
         System.out.println("Please enter your Store name");
         this.storeName = S1.next();
-        //System.out.println("Store request has been sent to Mall Owner");
         storeRequestList.put(storeID,new String[]{storeOwnerName,storeName});
         inventory = new Inventory(storeID);
         createAccount.addAccount("Store Owner",storeOwnerName,storeName);
@@ -35,16 +34,6 @@ public class StoreOwner {
         storeRequestList.put(storeID,new String[]{storeOwnerName,nameOfStore});
     }
 
-    public void sale()
-    {
-        //item price brand , item price brand , item price brand
-            Object[] inv = inventory.storeInventory.values().toArray();
-        for (int i = 1; i < inv.length ; i+=3) {
-           double salePrice = (double) inv[i];
-           inv[i] = salePrice*(0.5);
-        }
-
-        }
     }
 
 

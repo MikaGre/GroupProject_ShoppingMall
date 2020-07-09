@@ -6,53 +6,11 @@ public class Inventory{
     static int productID = 0;
     static int ID = 0;
     static double price;
-
-    static Scanner scanner;
-    static InvSheet i;
-
-    private int quantity;
-    int id; // Being used for scanner class
-    static String prouductName;
     public Inventory(int storeid) {}
     public Inventory(){}
-    public Inventory(String productName,int onHandQuantity){}
 
     Map<Integer, Object[]> storeInventory = new HashMap<>();
 
-
-    public int inventoryId(String productName, double price, int onHandQuantity) {
-
-        storeInventory = new HashMap<>();
-        ID = ID++;
-        return ID;
-    }
-
-    public void removeStoreItem() {
-        String val = "yes";
-        Scanner S3 = new Scanner(System.in);
-       try {
-           System.out.println("Please enter the product id");
-           id = S3.nextInt();
-       }
-        catch(InputMismatchException e)
-        {
-            System.out.println("Please enter only whole number");
-        }
-
-        for (Integer k : storeInventory.keySet()) {
-            if (id == k) {
-                System.out.println("Are you sure you want to remove this product? yes/no");
-                String name2 = S3.next();
-                if(name2.equalsIgnoreCase(val))
-                {
-                    ID = id;
-                    storeInventory.remove(ID);
-                }
-                break;
-            }
-        }
-        System.out.println(storeInventory.keySet());
-        }
 
     public void addStoreItem() {
         InvSheet invSheet = new InvSheet();
@@ -102,29 +60,19 @@ public class Inventory{
         for (Integer k : storeInventory.keySet()) {
             Object[] itemsInfo = storeInventory.get(k);
             if (itemsInfo[0].equals(item)) {
-                foundItem = true;
+                //foundItem = true;
                 System.out.println("Item found");
+                // break;
+                System.out.println("\nProduct Name: " + storeInventory.get(k)[0] +
+                        "\nPrice: $" + storeInventory.get(k)[1] +
+                        "\nQty: " + storeInventory.get(k)[2]);
                 break;
-                /*System.out.println("\nProduct Name: " + storeInventory.get(foundItem)[0] +
-                        "\nPrice: $" + storeInventory.get(foundItem)[1] +
-                        "\nQty: " + storeInventory.get(foundItem)[2]);*/
-                }
+            }
             else {
                 System.out.println("No such item found");
+                break;
             }
         }
-    }
-
-    public void getStoreItems()
-    {
-        for (Integer k : storeInventory.keySet()) {
-
-            Object[] itemsInfo = storeInventory.get(k);
-            System.out.println("\nProduct Name: " + itemsInfo[0]);
-            System.out.println("Price: $" + itemsInfo[1]);
-            System.out.println("Qty: " + itemsInfo[2]);
-        }
-
     }
 
     public void setPrice() throws IOException {

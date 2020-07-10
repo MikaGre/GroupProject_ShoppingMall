@@ -12,15 +12,13 @@ public class Inventory{
     Map<Integer, Object[]> storeInventory = new HashMap<>();
 
 
-    public void addStoreItem() {
+    public void addStoreItem(String storeName) {
         InvSheet invSheet = new InvSheet();
-        String storeName = null;
+        storeName = null;
         String productName;
         int onHandQuantity = 0;
         Integer val1 = 0;
         Scanner S2 = new Scanner(System.in);
-        System.out.println("Enter Your Store Name");
-        storeName = S2.next();
         try {
             System.out.println("How many items will you like to add?");
             val1 = S2.nextInt();

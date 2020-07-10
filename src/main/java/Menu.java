@@ -28,7 +28,7 @@ public class Menu {
 
     public void customerMenu() throws IOException {
         Order_class orderClass = new Order_class();
-        System.out.println("Hello. Choose action: \n(A)Visit Store  \n(Q)Logout");
+        System.out.println("Hello. Choose action: \n(A)Visit Store \n(P)Pay  \n(Q)Logout");
         String menuSelect = scanner.next().toLowerCase();
 
         switch (menuSelect){
@@ -38,6 +38,10 @@ public class Menu {
                 break;
             case "q":
                 mainMenu();
+                break;
+            case "p":
+                orderClass.payment();
+                customerMenu();
                 break;
             default:
                 System.out.println( menuSelect + " is not an action!");
@@ -71,6 +75,7 @@ public class Menu {
         switch (menuSelect){
             case "a":
                StoreOwner.sendStoreRequest();
+               storeOwnerMenu();
                 break;
             case "b":
                 System.out.println("(A)Search Items  \n(B)Get list of Items \n(C)Add Items \n(D)Set Item Price \n(E)Set Item Qty \n(S)Discount Item");
@@ -85,7 +90,7 @@ public class Menu {
                          storeOwnerMenu();
                          break;
                       case "c":
-                          inventory.addStoreItem();
+                          inventory.addStoreItem(sName);
                           storeOwnerMenu();
                           break;
                       case "d":

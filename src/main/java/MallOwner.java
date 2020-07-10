@@ -100,6 +100,7 @@ public class MallOwner {
 
         public static void forceStoreClose () {
         CreateAccount c = new CreateAccount();
+        c.storeList();
         System.out.println("\nSelect Store to Force Close(Select Row#)");
         int rowRemove = scanner.nextInt();
         c.removeStore(rowRemove);

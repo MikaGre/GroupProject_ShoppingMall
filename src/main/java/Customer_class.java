@@ -12,7 +12,9 @@ public void Customer_Class(){
 
 
 public static void leaveStore() throws IOException {
-enterStore();
+    System.out.println("******Thanks for Shopping*****");
+     Menu m = new Menu();
+     m.customerMenu();
 }
 
 public static void enterStore() throws IOException {

@@ -97,7 +97,6 @@ public class InvSheet {
                 System.out.println("Item found");
                 found = true;
             } else {
-                System.out.println("Incorrect login");
                 Menu menu = new Menu();
                 menu.mainMenu();
             }

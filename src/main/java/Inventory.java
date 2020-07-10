@@ -14,7 +14,6 @@ public class Inventory{
 
     public void addStoreItem(String storeName) {
         InvSheet invSheet = new InvSheet();
-        storeName = null;
         String productName;
         int onHandQuantity = 0;
         Integer val1 = 0;
